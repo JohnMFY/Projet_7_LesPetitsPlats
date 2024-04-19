@@ -7,7 +7,36 @@
     <title>Les petits plats</title>
 </head>
 <body>
- 
+ <header>
+    <div id="logo">
+        <h1>Les petits plats</h1>
+        <img src="assets/icons/circle-solid.svg" alt="logo" id="logo_img">
+    </div>
+    
+    <div id="search_header">
+        <h2>CHERCHER PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET DELICIEUSE</h2>
+        <div id="search_bar">
+            <input type="search" id="search_input" placeholder="Rechercher une recette, un ingrédient, ...">
+            <img src="assets/icons/magnifying-glass-solid.svg" alt="search_icon" id="search_icon">
+        </div>
+    </div>
+ </header>
+ <nav>
+    <select>
+        <option value="" selected>Ingrédients  </option>
+        <input type="search">
+    </select>
+
+    <select>
+        <option value="" selected>Appareils  </option>
+        <input type="search">
+    </select>
+
+    <select>
+        <option value="" selected>Ustensiles  </option>
+        <option value=""><input type="search"></option>
+    </select>
+ </nav>
 <script src="scripts/index.js"></script>   
 </body>
 </html>
