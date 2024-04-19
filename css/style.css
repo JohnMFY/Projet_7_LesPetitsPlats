@@ -14,18 +14,21 @@ header{
 h1{
     color: white;
     margin: 0%;
+    font-size: 50px;
 }
 #logo{
     display: flex;
     justify-content: flex-start;
     flex-flow: row nowrap;
+    align-items: center;
 }
 #logo_img{
     width: 20px;
+    height: 20px;
     border: solid 2px white;
     border-radius: 50%;
-    padding: 0.5%;
-    margin: 0% 1%;
+    padding: 2px;
+    margin: 1% 1% 0% 1%;
     }
 h2{
     color: rgb(250, 222, 65);
@@ -62,8 +65,51 @@ h2{
     outline: none;
 }
 #search_icon{
-    width: 25px;
+    width: auto;
     background-color: rgb(36, 36, 36);
-    padding: 15px;
+    padding: 20px;
     border-radius: 25%;
+    color: white;
+}
+#search_icon:active{
+    background-color: rgb(250, 222, 65);
+    color: black;
+}
+nav{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 0% 2%;
+}
+#options_selection{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    width: 60%;
+}
+select{
+    font-size: large;
+    font-weight: 500;
+    padding: 2% 4%;
+    border: none;
+}
+select:focus-visible{
+    outline: none;
+}
+h3{
+    font-weight: bolder;
+    font-size: 30px;
+}
+main{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.recipes_card{
+    width: 30%;
+    margin: 1.5%;
+    border: solid 2px black;
+    border-radius: 25px;
+    height: 700px;
 }
