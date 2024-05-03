@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les petits plats</title>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <body>
  <header>
     <div id="logo">
@@ -25,47 +27,25 @@
  </header>
  <nav>
     <div id="options_selection">
-        <select>
-            <option value="" selected>Ingrédients  </option>
-            <option value="">Test 1</option>
-            <option value="">Test 2</option>
-            <option value="">Test 3</option>
+        <select class="select" id="ingredientsSelect">
+            <option value="" disabled selected hidden>ingrédients</option>
         </select>
-
-        <select>
-            <option value="" selected>Appareils  </option>
-            <option value="">Test 1</option>
-            <option value="">Test 2</option>
-            <option value="">Test 3</option>
+        <select class="select" id="appareilsSelect">
+            <option value="" disabled selected hidden>Appareils</option>
         </select>
-
-        <select>
-            <option value="" selected>Ustensiles  </option>
-            <option value="">Test 1</option>
-            <option value="">Test 2</option>
-            <option value="">Test 3</option>
+        <select class="select" id="ustensilesSelect">
+            <option value="" disabled selected hidden>Ustensiles</option>
         </select>
     </div>
+
     <h3>1500 recettes</h3>
  </nav>
  <main>
+    <section id="recipesSection">
 
-    <article class="recipes_card">
-
-    </article>
-    
-    <article class="recipes_card">
-    </article>
-    <article class="recipes_card">
-    </article>
-    <article class="recipes_card">
-    </article>
-    <article class="recipes_card">
-    </article>
-    <article class="recipes_card">
-    </article>
-
+    </section>
  </main>
+ 
 <script src="scripts/index.js"></script>   
 <script src="https://kit.fontawesome.com/8768a0b980.js" crossorigin="anonymous"></script>
 </body>

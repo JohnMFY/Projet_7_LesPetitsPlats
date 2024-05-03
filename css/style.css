@@ -105,11 +105,35 @@ main{
     display: flex;
     flex-flow: row wrap;
 }
-
+#recipesSection{
+    width: 100%;
+}
 .recipes_card{
     width: 30%;
     margin: 1.5%;
     border: solid 2px black;
     border-radius: 25px;
     height: 700px;
+}
+#ingredientoptions{
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    justify-content: center;
+}
+#btnOption{
+    width: 100%;
+   /*border: none;*/
+    padding: 5px;
+    margin-top: 5%;
+}
+ul{
+    margin: 0%;
+    padding: 2%;
+}
+li{
+    list-style: none;
+    display: flex;
+    flex-flow: row nowrap;
+    width: 80%;
 }
