@@ -49,80 +49,99 @@
 
 /** STORAGE OF SELECTED DATA **/
 
-    let selectedIngredients = [];
-    let selectedAppareils = [];
-    let selectedUstensils = [];
+    let selectedItemsArray = [];
 
 
-    //onClick on option = selectedOption.push
-    //onClick on the cross(deleteOption) = selectedOption.pull(array, XXXX)
+/************************************************/    
+/******************* TEMPLATES *****************/
+/**********************************************/
 
-  /************************/
- /*** TEMPLATE RECIPES ***/
-/************************/
-    function recipeCard() {
-        const recipePicture = `assets/recipes/${recipes[i].image}`;
-        const recipesSection = document.getElementById('recipesSection');
-        const article = document.createElement( 'article' );
-        article.setAttribute('class', 'recipes_card');
+    /************************/
+    /*** TEMPLATE RECIPES ***/
+    /************************/
+        function displayRecipeCard(){
+            const recipePicture = `assets/recipes/${recipes[i].image}`;
+            const recipesSection = document.getElementById('recipesSection');
+            const article = document.createElement( 'article' );
+            article.setAttribute('class', 'recipes_card');
 
-        const img = document.createElement('img');
-        img.setAttribute('src', recipePicture);
-        img.setAttribute('class', 'recipePicture');
+            const img = document.createElement('img');
+            img.setAttribute('src', recipePicture);
+            img.setAttribute('class', 'recipePicture');
 
-        const time = document.createElement('p')
-        time.setAttribute('class', 'time')
-        time.textContent = recipes[i].time +'min'
+            const time = document.createElement('p')
+            time.setAttribute('class', 'time')
+            time.textContent = recipes[i].time +'min'
 
-        const h4 = document.createElement('h4');
-        h4.textContent = recipes[i].name;
+            const h4 = document.createElement('h4');
+            h4.textContent = recipes[i].name;
 
-        const h5Recette = document.createElement('h5');
-        h5Recette.textContent = 'RECETTE';
+            const h5Recette = document.createElement('h5');
+            h5Recette.textContent = 'RECETTE';
 
-        const p = document.createElement('p');
-        p.setAttribute('class','recipeDescription')
-        p.textContent = recipes[i].description;
+            const p = document.createElement('p');
+            p.setAttribute('class','recipeDescription')
+            p.textContent = recipes[i].description;
 
-        const h5Ingredients = document.createElement('h5');
-        h5Ingredients.textContent = 'INGREDIENTS';
+            const h5Ingredients = document.createElement('h5');
+            h5Ingredients.textContent = 'INGREDIENTS';
 
-        const divIngredients = document.createElement('div');
-        divIngredients.setAttribute('class', 'ingredients');
-        
-        //boucle for ingredients//
-            let recipeIngredients = recipes[i].ingredients;
+            const divIngredients = document.createElement('div');
+            divIngredients.setAttribute('class', 'ingredients');
+            
+            //boucle for ingredients//
+                let recipeIngredients = recipes[i].ingredients;
 
-            recipeIngredients.forEach((ingredients) =>{
-                const divIngredient = document.createElement('div');
-                divIngredient.setAttribute('class', 'ingredient');
+                recipeIngredients.forEach((ingredients) =>{
+                    const divIngredient = document.createElement('div');
+                    divIngredient.setAttribute('class', 'ingredient');
 
-                let ingredient = document.createElement('p');
-                ingredient.textContent = ingredients.ingredient;
+                    let ingredient = document.createElement('p');
+                    ingredient.textContent = ingredients.ingredient;
 
-                const divQtyUnit = document.createElement('div');
-                divQtyUnit.setAttribute('class', 'quantityAndUnit')
-                let quantity = document.createElement('p');
-                quantity.textContent = ingredients.quantity;
-                let unit = document.createElement('p');
-                unit.textContent = ingredients.unit;
+                    const divQtyUnit = document.createElement('div');
+                    divQtyUnit.setAttribute('class', 'quantityAndUnit')
+                    let quantity = document.createElement('p');
+                    quantity.textContent = ingredients.quantity;
+                    let unit = document.createElement('p');
+                    unit.textContent = ingredients.unit;
 
-                divIngredient.appendChild(ingredient);
-                divIngredient.appendChild(divQtyUnit);
-                divQtyUnit.appendChild(quantity);
-                divQtyUnit.appendChild(unit);
-                divIngredients.appendChild(divIngredient);
-            })
-        //
-        article.appendChild(img);
-        article.appendChild(time)
-        article.appendChild(h4);
-        article.appendChild(h5Recette);
-        article.appendChild(p);
-        article.appendChild(h5Ingredients);
-        article.appendChild(divIngredients);
-        recipesSection.appendChild(article);
-    }
+                    divIngredient.appendChild(ingredient);
+                    divIngredient.appendChild(divQtyUnit);
+                    divQtyUnit.appendChild(quantity);
+                    divQtyUnit.appendChild(unit);
+                    divIngredients.appendChild(divIngredient);
+                })
+            //
+            article.appendChild(img);
+            article.appendChild(time)
+            article.appendChild(h4);
+            article.appendChild(h5Recette);
+            article.appendChild(p);
+            article.appendChild(h5Ingredients);
+            article.appendChild(divIngredients);
+            recipesSection.appendChild(article);
+        }
+    /***************************/
+    /** TEMPLATE SELECTED TAG **/
+    /***************************/
+        function displaySelectedTag(){
+            const divSelectedItems = document.getElementById('selectedItems')
+
+            const divSelectedItem = document.createElement('div')
+            divSelectedItem.setAttribute('class', 'selectedItemDisplay')
+                
+            let selectedItem = document.createElement('p')
+            selectedItem.textContent = selectedItemsArray[i].value
+
+            const deleteIcon = document.createElement('i')
+            deleteIcon.setAttribute('class', 'fa-solid fa-xmark deleteTag')
+
+            divSelectedItems.appendChild(divSelectedItem)
+            divSelectedItem.appendChild(selectedItem)
+            divSelectedItem.appendChild(deleteIcon)
+        }
+
 /****************************************************************************/    
 /******************* INTEGRATION OF RECIPES IN THE DOM *********************/
 /**************************************************************************/
@@ -158,46 +177,69 @@
     }
 
 /**** RECIPES CARDS INTEGRATION ****/
-for(i = 0; i < recipes.length; i++){
-    recipeCard()
-}
+    for(i = 0; i < recipes.length; i++){
+        displayRecipeCard()
+    }
 
+/**** SELECTED TAG INTEGRATION ****/
+    function tagInDom(){
+        for( i = 0 ; i < selectedItemsArray.length; i++){
+            console.log(selectedItemsArray)
+            displaySelectedTag()
+        }
+    }
+/**** SELECTED TAG SUPPRESSION ****/ 
+/*
+    function removeTag(){
+        let deleteBtn = document.querySelectorAll('.deleteTag')
+        deleteBtn.addEventListener('click', () => {
+            console.log('ok btn delete')
+        })
+    }
+*/
   /*******************************/
  /** FUNCTIONS OF DYNAMISATION **/
 /*******************************/
 
     /**** SELECTION OF OPTION ****/
 
-        const selectedOptionDiv = document.getElementById('selectedItems') //div for DOM insertion
-
         /** SELECTION OF INGREDIENT **/
-        function selectedOptionIngredients(){
-            let ingredientsOption = document.querySelectorAll('.ingredientsOption')
-            ingredientsOption.forEach(ingredientOption =>{
-                //console.log(ingredientOption);
-                ingredientOption.addEventListener('click', () => {
-                    console.log('ok ingredient option ' + ingredientOption.value)
+            function selectedOptionIngredients(){
+                const ingredientOption = document.getElementById('ingredientsSelect') 
+                ingredientOption.addEventListener('change', () => {
+                    const ingredientOptionSelected = {
+                        label: "ingredient",
+                        value: ingredientOption.value 
+                    }
+                    selectedItemsArray.push(ingredientOptionSelected);
+                    tagInDom()       
                 });
-            })
-        }selectedOptionIngredients()
+            }selectedOptionIngredients()
+
         /** SELECTION OF APPAREILS **/
-        function selectedOptionAppareils(){
-            let appareilsOption = document.querySelectorAll('.appareilsOption')
-            appareilsOption.forEach(appareilOption =>{
-                //console.log(appareilOption);
-                appareilOption.addEventListener('click', () => {
-                    console.log('ok appareil option '+ appareilOption.value)
+            function selectedOptionAppareils(){
+                const appareilOption = document.getElementById('appareilsSelect')
+                appareilOption.addEventListener('change', () => {
+                    const appareilOptionSelected = {
+                        label: "appareil",
+                        value: appareilOption.value 
+                    }
+                    selectedItemsArray.push(appareilOptionSelected);
+                    tagInDom()
                 });
-            })
-        }selectedOptionAppareils()
+            }selectedOptionAppareils()
+
         /** SELECTION OF USTENSILS **/
-        function selectedOptionUstensils(){
-            let ustensilsOption = document.querySelectorAll('.ustensilsOption')
-            ustensilsOption.forEach(ustensilOption =>{
-                //console.log(appareilOption);
-                ustensilOption.addEventListener('click', () => {
-                    console.log('ok appareil option '+ ustensilOption.value)
+            function selectedOptionUstensils(){
+                const ustensilOption = document.getElementById('ustensilesSelect')
+                ustensilOption.addEventListener('change', () => {
+                    const ustensilOptionSelected = {
+                        label: "ustensil",
+                        value: ustensilOption.value 
+                    }
+                    selectedItemsArray.push(ustensilOptionSelected)
+                    tagInDom()
                 });
-            })
-        }selectedOptionUstensils()
+            }selectedOptionUstensils()
+
     /*****************************/
