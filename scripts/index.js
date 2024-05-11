@@ -132,6 +132,7 @@
             divSelectedItem.setAttribute('class', 'selectedItemDisplay')
                 
             let selectedItem = document.createElement('p')
+            selectedItem.setAttribute('class','itemValue')
             selectedItem.textContent = selectedItemsArray[i].value
 
             const deleteIcon = document.createElement('i')
@@ -183,8 +184,12 @@
 
 /**** SELECTED TAG INTEGRATION ****/
     function tagInDom(){
+        const selectedItems = document.getElementById('selectedItems');
+        selectedItems.innerHTML = '';
+        console.log(selectedItemsArray);
+
         for( i = 0 ; i < selectedItemsArray.length; i++){
-            console.log(selectedItemsArray)
+            
             displaySelectedTag()
         }
     }
