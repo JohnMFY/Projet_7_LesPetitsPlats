@@ -132,11 +132,11 @@
             divSelectedItem.setAttribute('class', 'selectedItemDisplay')
                 
             let selectedItem = document.createElement('p')
-            selectedItem.setAttribute('class','itemValue')
+            selectedItem.setAttribute('class',selectedItemsArray[i].label)
             selectedItem.textContent = selectedItemsArray[i].value
 
             const deleteIcon = document.createElement('i')
-            deleteIcon.setAttribute('class', 'fa-solid fa-xmark deleteTag')
+            deleteIcon.setAttribute('class', 'fa-solid fa-xmark fa-lg deleteTag')
 
             divSelectedItems.appendChild(divSelectedItem)
             divSelectedItem.appendChild(selectedItem)
@@ -184,24 +184,32 @@
 
 /**** SELECTED TAG INTEGRATION ****/
     function tagInDom(){
+        
         const selectedItems = document.getElementById('selectedItems');
         selectedItems.innerHTML = '';
-        console.log(selectedItemsArray);
 
-        for( i = 0 ; i < selectedItemsArray.length; i++){
-            
+        for( i = 0 ; i < selectedItemsArray.length; i++){    
             displaySelectedTag()
         }
+        
     }
 /**** SELECTED TAG SUPPRESSION ****/ 
-/*
-    function removeTag(){
-        let deleteBtn = document.querySelectorAll('.deleteTag')
+    function deleteTag(){
+        const deleteBtn = document.querySelectorAll('.deleteTag')
+        let itemValue = deleteBtn.previousElementSibling
+          
         deleteBtn.addEventListener('click', () => {
-            console.log('ok btn delete')
+            console.log(itemValue.className + ' : ' + itemValue.innerHTML)
+            let selectedItemsUpdate = selectedItemsArray.filter( item =>{
+                return item.value !== itemValue;
+            });
+
+            selectedItemsArray = [];
+            selectedItemsArray.push(selectedItemsUpdate);
+            tagInDom()
         })
-    }
-*/
+    } deleteTag()
+    
   /*******************************/
  /** FUNCTIONS OF DYNAMISATION **/
 /*******************************/
@@ -217,7 +225,7 @@
                         value: ingredientOption.value 
                     }
                     selectedItemsArray.push(ingredientOptionSelected);
-                    tagInDom()       
+                    tagInDom()                      
                 });
             }selectedOptionIngredients()
 
