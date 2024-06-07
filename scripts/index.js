@@ -4,54 +4,51 @@
 
 /** RECUPERATION DATA **/
     import { recipes } from "../data/recipes.js";
-
+    let i = 0;
 /****** STORAGE &  ERADICATION OF DUPLICATE ******/
-    /** Recuperation of ingredients and eradication of duplicate **/
+    /** Recuperation of ingredients **/
         let ingredientsArrayTotal = [];
+        let ingredientsArray = [];
+        function getIngredientsData(){
             recipes.forEach((recipe) => {
                 recipe.ingredients.forEach((ingredient) => {
                     ingredientsArrayTotal.push(ingredient.ingredient)
                 }) 
             })
-            ingredientsArrayTotal = ingredientsArrayTotal.map(function (e) { // put all in lower case to avoid duplicate due to ortographe
-                return e.toLowerCase()
-            });
-        let ingredientsArray = ingredientsArrayTotal.filter((item, index, array)=>{
-            return array.indexOf(item) === index;
-        });
-    /** Recuperation of appareils and eradication of duplicate **/
-        let appareilArrayTotal = []
-            recipes.forEach((recipe) => {
-                appareilArrayTotal.push(recipe.appliance)
-            }) 
-            appareilArrayTotal = appareilArrayTotal.map(function (e) { 
-                return e.toLowerCase()
-            });
-        let appareilArray = appareilArrayTotal.filter((item, index, array)=>{
-            return array.indexOf(item) === index;
-        }); 
+        }getIngredientsData()
 
-    /** Recuperation of USTENSILS and eradication of duplicate **/
+    /** Recuperation of appareils **/
+        let appareilsArrayTotal = [];
+        let appareilsArray = [];
+        function getAppareilsData(){
+            recipes.forEach((recipe) => {
+                appareilsArrayTotal.push(recipe.appliance)
+            }) 
+        }getAppareilsData()
+
+    /** Recuperation of USTENSILS **/
         let ustensilsArrayTotal = [];
+        let ustensilsArray = []
+        function getUstensilsData(){
             recipes.forEach((recipe) => {
                 recipe.ustensils.forEach((ustensil) => {
                     ustensilsArrayTotal.push(ustensil)
                 });   
             }); 
-            ustensilsArrayTotal = ustensilsArrayTotal.map(function (e) {    
-                return e.toLowerCase()
-            });
-        let ustensilsArray = ustensilsArrayTotal.filter((item, index, array)=>{
-            return array.indexOf(item) === index;
-        });
+        }getUstensilsData()
+
+    /** Remove duplicate **/    
+        ingredientsArray = ([...new Set(ingredientsArrayTotal)]);
+        appareilsArray   = ([...new Set(appareilsArrayTotal)]);
+        ustensilsArray   = ([...new Set(ustensilsArrayTotal)]);
 /*******************************************************/ 
 
 
 /** STORAGE OF SELECTED DATA **/
 
     let selectedItemsArray = [];
-
-
+    let selectedItemsArrayValue = [];
+    let optionIngredientsUpdate = ingredientsArray;
 /************************************************/    
 /******************* TEMPLATES *****************/
 /**********************************************/
@@ -59,7 +56,7 @@
     /************************/
     /*** TEMPLATE RECIPES ***/
     /************************/
-        function displayRecipeCard(){
+        function templateRecipeCard(){
             const recipePicture = `assets/recipes/${recipes[i].image}`;
             const recipesSection = document.getElementById('recipesSection');
             const article = document.createElement( 'article' );
@@ -124,135 +121,142 @@
         }
     /***************************/
     /** TEMPLATE SELECTED TAG **/
-    /***************************/
-        function displaySelectedTag(){
+    /***************************/   
+        function tamplateTag(i){
             const divSelectedItems = document.getElementById('selectedItems')
 
             const divSelectedItem = document.createElement('div')
             divSelectedItem.setAttribute('class', 'selectedItemDisplay')
-                
+
             let selectedItem = document.createElement('p')
             selectedItem.setAttribute('class',selectedItemsArray[i].label)
             selectedItem.textContent = selectedItemsArray[i].value
 
             const deleteIcon = document.createElement('i')
             deleteIcon.setAttribute('class', 'fa-solid fa-xmark fa-lg deleteTag')
+        
+                deleteIcon.addEventListener('click', () => { 
+                    
+                    optionIngredientsUpdate.push(selectedItemsArray[i].value) 
+                    console.log('update : ' + optionIngredientsUpdate)
+                    console.log(selectedItemsArray[i].value)
+                    selectedItemsArray.splice(i,1)
+                    displayTag()        
+                })
 
             divSelectedItems.appendChild(divSelectedItem)
             divSelectedItem.appendChild(selectedItem)
             divSelectedItem.appendChild(deleteIcon)
         }
-
+       
 /****************************************************************************/    
 /******************* INTEGRATION OF RECIPES IN THE DOM *********************/
 /**************************************************************************/
 
-/**** INGREDIENTS OPTION INTEGRATION ****/
-    let ingredientsSelect = document.getElementById('ingredientsSelect')
-    let i;
-    for( i = 0 ; i < ingredientsArray.length; i++){
-        const optionIngredient = document.createElement('option');
-        optionIngredient.setAttribute('value', ingredientsArray[i]);
-        optionIngredient.setAttribute('class', 'ingredientsOption')
-        optionIngredient.textContent = ingredientsArray[i];
-        ingredientsSelect.appendChild(optionIngredient)
-    }
-/**** APPAREILS OPTION INTEGRATION ****/
-    let appareilsSelect = document.getElementById('appareilsSelect')
-    for( i = 0 ; i < appareilArray.length; i++){
-        const optionAppareil = document.createElement('option');
-        optionAppareil.setAttribute('value', appareilArray[i]);
-        optionAppareil.setAttribute('class', 'appareilsOption')
-        optionAppareil.textContent = appareilArray[i];
-        appareilsSelect.appendChild(optionAppareil)
-    }
-
-/**** USTENSILES OPTION INTEGRATION ****/
-    let ustensilesSelect = document.getElementById('ustensilesSelect')
-    for( i = 0 ; i < ustensilsArray.length; i++){
-        const optionUstensil = document.createElement('option');
-        optionUstensil.setAttribute('value', ustensilsArray[i]);
-        optionUstensil.setAttribute('class', 'ustensilsOption')
-        optionUstensil.textContent = ustensilsArray[i];
-        ustensilesSelect.appendChild(optionUstensil)
-    }
-
-/**** RECIPES CARDS INTEGRATION ****/
-    for(i = 0; i < recipes.length; i++){
-        displayRecipeCard()
-    }
-
 /**** SELECTED TAG INTEGRATION ****/
-    function tagInDom(){
-        
+    function displayTag(){
         const selectedItems = document.getElementById('selectedItems');
         selectedItems.innerHTML = '';
-
         for( i = 0 ; i < selectedItemsArray.length; i++){    
-            displaySelectedTag()
-        }
+            tamplateTag(i);
+            selectedItemsArrayValue.push(selectedItemsArray[i].value)
+        }  
+        return optionIngredientsUpdate = ingredientsArray.filter(num => !selectedItemsArrayValue.includes(num));
         
-    }
-/**** SELECTED TAG SUPPRESSION ****/ 
-    function deleteTag(){
-        const deleteBtn = document.querySelectorAll('.deleteTag')
-        let itemValue = deleteBtn.previousElementSibling
-          
-        deleteBtn.addEventListener('click', () => {
-            console.log(itemValue.className + ' : ' + itemValue.innerHTML)
-            let selectedItemsUpdate = selectedItemsArray.filter( item =>{
-                return item.value !== itemValue;
-            });
+    }  
 
-            selectedItemsArray = [];
-            selectedItemsArray.push(selectedItemsUpdate);
-            tagInDom()
-        })
-    } deleteTag()
-    
+/**** INGREDIENTS OPTION INTEGRATION ****/
+    function displayOptionIngredients(){
+        let ingredientsSelect = document.getElementById('ingredientsSelect')
+        for( i = 0 ; i < optionIngredientsUpdate.length; i++){
+            const optionIngredient = document.createElement('option');
+            optionIngredient.setAttribute('value', ingredientsArray[i]);
+            optionIngredient.setAttribute('class', 'ingredientsOption')
+            optionIngredient.textContent = ingredientsArray[i];
+            ingredientsSelect.appendChild(optionIngredient)
+        }
+    }displayOptionIngredients()
+
+/**** APPAREILS OPTION INTEGRATION ****/
+    function displayOptionAppareils(){
+        let appareilsSelect = document.getElementById('appareilsSelect')
+        for( i = 0 ; i < appareilsArray.length; i++){
+            const optionAppareil = document.createElement('option');
+            optionAppareil.setAttribute('value', appareilsArray[i]);
+            optionAppareil.setAttribute('class', 'appareilsOption')
+            optionAppareil.textContent = appareilsArray[i];
+            appareilsSelect.appendChild(optionAppareil)
+        }
+    }displayOptionAppareils()
+
+/**** USTENSILES OPTION INTEGRATION ****/
+    function displayOptionUstensils(){
+        let ustensilesSelect = document.getElementById('ustensilesSelect')
+        for( i = 0 ; i < ustensilsArray.length; i++){
+            const optionUstensil = document.createElement('option');
+            optionUstensil.setAttribute('value', ustensilsArray[i]);
+            optionUstensil.setAttribute('class', 'ustensilsOption')
+            optionUstensil.textContent = ustensilsArray[i];
+            ustensilesSelect.appendChild(optionUstensil)
+        }
+    }displayOptionUstensils()
+
+/**** RECIPES CARDS INTEGRATION ****/
+    function displayRecipes(){
+        for(i = 0; i < recipes.length; i++){
+            templateRecipeCard()
+        }
+    }displayRecipes()
+
+
   /*******************************/
  /** FUNCTIONS OF DYNAMISATION **/
 /*******************************/
-
+        
     /**** SELECTION OF OPTION ****/
 
         /** SELECTION OF INGREDIENT **/
-            function selectedOptionIngredients(){
+            function selectedIngredientsUpdate(){
                 const ingredientOption = document.getElementById('ingredientsSelect') 
                 ingredientOption.addEventListener('change', () => {
-                    const ingredientOptionSelected = {
+                    const ingredientSelected = {
                         label: "ingredient",
                         value: ingredientOption.value 
                     }
-                    selectedItemsArray.push(ingredientOptionSelected);
-                    tagInDom()                      
+                    selectedItemsArray.push(ingredientSelected);
+                    displayTag() 
                 });
-            }selectedOptionIngredients()
+            }selectedIngredientsUpdate()
 
         /** SELECTION OF APPAREILS **/
-            function selectedOptionAppareils(){
+            function selectedAppareilsUpdate(){
                 const appareilOption = document.getElementById('appareilsSelect')
                 appareilOption.addEventListener('change', () => {
-                    const appareilOptionSelected = {
+                    const appareilSelected = {
                         label: "appareil",
                         value: appareilOption.value 
                     }
-                    selectedItemsArray.push(appareilOptionSelected);
-                    tagInDom()
+                    selectedItemsArray.push(appareilSelected);
+                    displayTag()
                 });
-            }selectedOptionAppareils()
+            }selectedAppareilsUpdate()
 
         /** SELECTION OF USTENSILS **/
-            function selectedOptionUstensils(){
+            function selectedUstensilsUpdate(){
                 const ustensilOption = document.getElementById('ustensilesSelect')
                 ustensilOption.addEventListener('change', () => {
-                    const ustensilOptionSelected = {
+                    const ustensilSelected = {
                         label: "ustensil",
                         value: ustensilOption.value 
                     }
-                    selectedItemsArray.push(ustensilOptionSelected)
-                    tagInDom()
+                    selectedItemsArray.push(ustensilSelected)
+                    displayTag()
                 });
-            }selectedOptionUstensils()
+            }selectedUstensilsUpdate()
 
     /*****************************/
+
+    let test = document.getElementById('search_icon')
+    test.addEventListener('click', () => {
+        console.log(optionIngredientsUpdate)
+    }) 
