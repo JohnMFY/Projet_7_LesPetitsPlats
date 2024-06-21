@@ -6,10 +6,12 @@
     import { recipes } from "../data/recipes.js";
     let i = 0;
 /****** STORAGE &  ERADICATION OF DUPLICATE ******/
+// Créer une table liste recette actualisé en fonction des options par exclusion des recettes qui n'ont pas les options demandé
+// dans un 1er temps let recipesUpdated = recipes puis faire un sorting par exclusion avec condition IF
     /** Recuperation of ingredients **/
         let ingredientsArrayTotal = [];
         let ingredientsArray = [];
-        function getIngredientsData(){
+        function getIngredientsData(){//à modifier partir d'une list de recette
             recipes.forEach((recipe) => {
                 recipe.ingredients.forEach((ingredient) => {
                     ingredientsArrayTotal.push(ingredient.ingredient)
@@ -38,9 +40,15 @@
         }getUstensilsData()
 
     /** Remove duplicate **/    
-        ingredientsArray = ([...new Set(ingredientsArrayTotal)]);
-        appareilsArray   = ([...new Set(appareilsArrayTotal)]);
-        ustensilsArray   = ([...new Set(ustensilsArrayTotal)]);
+        let ingredientsArrayLowercase = ingredientsArrayTotal.map( ingredient => ingredient.toLowerCase())
+        ingredientsArray = ([...new Set(ingredientsArrayLowercase)]);
+
+        let appareilsArrayLowercase = appareilsArrayTotal.map( appareil => appareil.toLowerCase())
+        appareilsArray = ([...new Set(appareilsArrayLowercase)]);
+
+        let ustensilsArrayLowercase = ustensilsArrayTotal.map( ustensil => ustensil.toLowerCase())
+        ustensilsArray = ([...new Set(ustensilsArrayLowercase)]); 
+        
 /*******************************************************/ 
 
 
@@ -49,6 +57,8 @@
     let selectedItemsArray = [];
     let selectedItemsArrayValue = [];
     let optionIngredientsUpdate = ingredientsArray;
+    let optionAppareilsUpdate = appareilsArray;
+    let optionUstensilsUpdate = ustensilsArray;
 /************************************************/    
 /******************* TEMPLATES *****************/
 /**********************************************/
@@ -136,12 +146,16 @@
             deleteIcon.setAttribute('class', 'fa-solid fa-xmark fa-lg deleteTag')
         
                 deleteIcon.addEventListener('click', () => { 
-                    
-                    optionIngredientsUpdate.push(selectedItemsArray[i].value) 
-                    console.log('update : ' + optionIngredientsUpdate)
-                    console.log(selectedItemsArray[i].value)
+                    if(selectedItemsArray[i].label === "ingredient"){
+                        optionIngredientsUpdate.push(selectedItemsArray[i].value)
+                    }if(selectedItemsArray[i].label === "appareil"){
+                        optionAppareilsUpdate.push(selectedItemsArray[i].value)
+                    }if(selectedItemsArray[i].label === "ustensil"){
+                        optionUstensilsUpdate.push(selectedItemsArray[i].value)
+                    }
+                    selectedItemsArrayValue = selectedItemsArrayValue.filter(num => !selectedItemsArrayValue.includes(num))
                     selectedItemsArray.splice(i,1)
-                    displayTag()        
+                    displayTag()       
                 })
 
             divSelectedItems.appendChild(divSelectedItem)
@@ -160,9 +174,11 @@
         for( i = 0 ; i < selectedItemsArray.length; i++){    
             tamplateTag(i);
             selectedItemsArrayValue.push(selectedItemsArray[i].value)
-        }  
-        return optionIngredientsUpdate = ingredientsArray.filter(num => !selectedItemsArrayValue.includes(num));
-        
+            selectedItemsArrayValue = ([...new Set(selectedItemsArrayValue)]);
+        }
+            optionIngredientsUpdate = ingredientsArray.filter(num => !selectedItemsArrayValue.includes(num))
+            optionAppareilsUpdate = appareilsArray.filter(num => !selectedItemsArrayValue.includes(num))
+            optionUstensilsUpdate = ustensilsArray.filter(num => !selectedItemsArrayValue.includes(num))
     }  
 
 /**** INGREDIENTS OPTION INTEGRATION ****/
@@ -170,21 +186,22 @@
         let ingredientsSelect = document.getElementById('ingredientsSelect')
         for( i = 0 ; i < optionIngredientsUpdate.length; i++){
             const optionIngredient = document.createElement('option');
-            optionIngredient.setAttribute('value', ingredientsArray[i]);
+            optionIngredient.setAttribute('value', optionIngredientsUpdate[i]);
             optionIngredient.setAttribute('class', 'ingredientsOption')
-            optionIngredient.textContent = ingredientsArray[i];
+            optionIngredient.textContent = optionIngredientsUpdate[i];
             ingredientsSelect.appendChild(optionIngredient)
         }
+        displayTag()
     }displayOptionIngredients()
 
 /**** APPAREILS OPTION INTEGRATION ****/
     function displayOptionAppareils(){
         let appareilsSelect = document.getElementById('appareilsSelect')
-        for( i = 0 ; i < appareilsArray.length; i++){
+        for( i = 0 ; i < optionAppareilsUpdate.length; i++){
             const optionAppareil = document.createElement('option');
-            optionAppareil.setAttribute('value', appareilsArray[i]);
+            optionAppareil.setAttribute('value', optionAppareilsUpdate[i]);
             optionAppareil.setAttribute('class', 'appareilsOption')
-            optionAppareil.textContent = appareilsArray[i];
+            optionAppareil.textContent = optionAppareilsUpdate[i];
             appareilsSelect.appendChild(optionAppareil)
         }
     }displayOptionAppareils()
@@ -192,11 +209,11 @@
 /**** USTENSILES OPTION INTEGRATION ****/
     function displayOptionUstensils(){
         let ustensilesSelect = document.getElementById('ustensilesSelect')
-        for( i = 0 ; i < ustensilsArray.length; i++){
+        for( i = 0 ; i < optionUstensilsUpdate.length; i++){
             const optionUstensil = document.createElement('option');
-            optionUstensil.setAttribute('value', ustensilsArray[i]);
+            optionUstensil.setAttribute('value', optionUstensilsUpdate[i]);
             optionUstensil.setAttribute('class', 'ustensilsOption')
-            optionUstensil.textContent = ustensilsArray[i];
+            optionUstensil.textContent = optionUstensilsUpdate[i];
             ustensilesSelect.appendChild(optionUstensil)
         }
     }displayOptionUstensils()
@@ -259,4 +276,8 @@
     let test = document.getElementById('search_icon')
     test.addEventListener('click', () => {
         console.log(optionIngredientsUpdate)
+        console.log(optionAppareilsUpdate)
+        console.log(optionUstensilsUpdate)
+        console.log(selectedItemsArray)
+        console.log(selectedItemsArrayValue)
     }) 
