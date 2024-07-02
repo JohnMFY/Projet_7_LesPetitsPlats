@@ -207,13 +207,13 @@ function getOnlyTagsNotDisplayed(baseArray) {
 }
 
 /**** INGREDIENTS OPTION INTEGRATION ****/
-function displayOptionForType(array, selectId) {
+function displayOptionForType(array, selectId, className) {
   const optionsToDisplay = getOnlyTagsNotDisplayed(array);
   let select = document.getElementById(selectId);
   select.innerHTML = "";
-  console.log(optionsToDisplay);
   optionsToDisplay.forEach((option) => {
     const optionDOM = document.createElement("option");
+    optionDOM.setAttribute('class',className);
     optionDOM.setAttribute("value", option);
     optionDOM.textContent = option;
     select.appendChild(optionDOM);
@@ -221,11 +221,10 @@ function displayOptionForType(array, selectId) {
 }
 
 function displayAllSelect() {
-  displayOptionForType(ingredientsArray, "ingredientsSelect");
-  displayOptionForType(appareilsArray, "appareilsSelect");
-  displayOptionForType(ustensilsArray, "ustensilesSelect");
+  displayOptionForType(ingredientsArray, "ingredientsSelect", 'ingredient');
+  displayOptionForType(appareilsArray, "appareilsSelect", 'appareil');
+  displayOptionForType(ustensilsArray, "ustensilesSelect", 'ustensile');
 }
-
 displayAllSelect();
 
 /**** RECIPES CARDS INTEGRATION ****/
@@ -242,22 +241,23 @@ displayRecipes(recipes);
 
 /**** SELECTION OF OPTION ****/
 
-/** SELECTION OF INGREDIENT **/
+/** SELECTION OF INGREDIENT **//*
 function selectedIngredientsUpdate() {
   const ingredientOption = document.getElementById("ingredientsSelect");
   ingredientOption.addEventListener("change", () => {
-    console.log("test");
+    console.log(ingredientOption);
     const ingredientSelected = {
       label: "ingredient",
       value: ingredientOption.value,
     };
+    console.log(ingredientOption.id)
     selectedItemsArray.push(ingredientSelected);
     displayTag();
   });
 }
 selectedIngredientsUpdate();
 
-/** SELECTION OF APPAREILS **/
+/** SELECTION OF APPAREILS **//*
 function selectedAppareilsUpdate() {
   const appareilOption = document.getElementById("appareilsSelect");
   appareilOption.addEventListener("change", () => {
@@ -271,7 +271,7 @@ function selectedAppareilsUpdate() {
 }
 selectedAppareilsUpdate();
 
-/** SELECTION OF USTENSILS **/
+/** SELECTION OF USTENSILS **//*
 function selectedUstensilsUpdate() {
   const ustensilOption = document.getElementById("ustensilesSelect");
   ustensilOption.addEventListener("change", () => {
@@ -284,8 +284,59 @@ function selectedUstensilsUpdate() {
   });
 }
 selectedUstensilsUpdate();
+  /** SELECTION OF INGREDIENT REFACTO 1 **/
 
+  const ingredientOption = document.getElementById("ingredientsSelect");
+  const appareilOption = document.getElementById("appareilsSelect");
+  const ustensilOption = document.getElementById("ustensilesSelect");
+/*
+  function selectedItemsUpdate(selectId){
+    selectId.addEventListener("change", () => {
+      console.log(selectId.lastChild.className)
+      if(selectId.id === "ingredientsSelect"){
+        const ingredientSelected = {
+          label: "ingredient",
+          value: ingredientOption.value,
+        };
+        selectedItemsArray.push(ingredientSelected);
+      }
+      if(selectId.id === "appareilsSelect"){
+        const appareilSelected = {
+          label: "appareil",
+          value: appareilOption.value,
+        };
+        selectedItemsArray.push(appareilSelected);
+      }
+      if(selectId.id === "ustensilesSelect"){
+        const ustensilSelected = {
+          label: "ustensil",
+          value: ustensilOption.value,
+        };
+        selectedItemsArray.push(ustensilSelected);
+      }
+      displayTag();
+    });
+  }
+  */
+  function selectedItemsUpdate2(selectId){
+    selectId.addEventListener("change", () => {
+      const optionSelected= {
+        label: selectId.lastChild.className,
+        value: ingredientOption.value,
+      };
+      selectedItemsArray.push(optionSelected);
+      displayTag();
+    });
+  }
+
+  function updateAllSelect() {
+    selectedItemsUpdate2(ingredientOption);
+    selectedItemsUpdate2(appareilOption);
+    selectedItemsUpdate2(ustensilOption);
+  }
+  updateAllSelect();
 /*****************************/
+
 
 let test = document.getElementById("search_icon");
 test.addEventListener("click", () => {

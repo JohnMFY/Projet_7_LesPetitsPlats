@@ -91,6 +91,25 @@ nav{
     justify-content: space-between;
     width: 60%;
 }
+.options_btn{
+    font-size: large;
+    font-weight: 500;
+    padding: 2% 0%;
+    border: none;
+    width: 100%;
+    margin: 3% 5% 3% 5%;
+}
+#ustensilesOptions_box{
+    display: flex;
+}
+.search_input_option{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+.optionItem:hover{
+    background-color: #FFD15B;
+}
 select{
     font-size: large;
     font-weight: 500;
