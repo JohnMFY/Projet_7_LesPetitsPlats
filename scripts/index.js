@@ -286,9 +286,6 @@ function selectedUstensilsUpdate() {
 selectedUstensilsUpdate();
   /** SELECTION OF INGREDIENT REFACTO 1 **/
 
-  const ingredientOption = document.getElementById("ingredientsSelect");
-  const appareilOption = document.getElementById("appareilsSelect");
-  const ustensilOption = document.getElementById("ustensilesSelect");
 /*
   function selectedItemsUpdate(selectId){
     selectId.addEventListener("change", () => {
@@ -318,7 +315,12 @@ selectedUstensilsUpdate();
     });
   }
   */
-  function selectedItemsUpdate2(selectId){
+ 
+  const ingredientOption = document.getElementById("ingredientsSelect");
+  const appareilOption = document.getElementById("appareilsSelect");
+  const ustensilOption = document.getElementById("ustensilesSelect");
+
+  function selectedItemsUpdate(selectId){
     selectId.addEventListener("change", () => {
       const optionSelected= {
         label: selectId.lastChild.className,
@@ -330,9 +332,9 @@ selectedUstensilsUpdate();
   }
 
   function updateAllSelect() {
-    selectedItemsUpdate2(ingredientOption);
-    selectedItemsUpdate2(appareilOption);
-    selectedItemsUpdate2(ustensilOption);
+    selectedItemsUpdate(ingredientOption);
+    selectedItemsUpdate(appareilOption);
+    selectedItemsUpdate(ustensilOption);
   }
   updateAllSelect();
 /*****************************/
