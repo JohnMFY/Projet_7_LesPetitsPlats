@@ -42,9 +42,9 @@
       } getUstensilsData();
 /*******************************************************/
 
-/** STORAGE OF SELECTED DATA **/
+/** STORAGE OF SELECTED/SORTED DATA **/
   let selectedItemsArray = [];
-  let selectedItemsArrayValue = [];
+  let filteredRecipes = [];
 
 /************************************************/
 /******************* TEMPLATES *****************/
@@ -149,11 +149,10 @@
 /**  UPDATE RECIPES LIST  **/
 /***************************/
   function updateRecipesList(selectedTags, textSearch) {
-    let filteredRecipes = [];
 
     recipes.forEach((recipe) => {
       let isCorrect = true;
-      if (true === true) {
+      if (/* ingredients.ingredient */true === true) {
         // ingredients
         isCorrect = false;
       }
@@ -171,8 +170,19 @@
     });
 
     // displayRecipes(filteredRecipes);
+    updateRecipesNumber();
   }
-
+/****************************/
+/** UPDATE RECIPES NUMBER **/
+/**************************/  
+  const displayedRecipesNumber = document.getElementById('recipes_number')
+  function updateRecipesNumber(){
+    if(filteredRecipes.length > 1){
+      displayedRecipesNumber.innerHTML = filteredRecipes.length +" recettes"
+    }else{
+      displayedRecipesNumber.innerHTML = filteredRecipes.length +" recette"
+    }
+  }
 /****************************************************************************/
 /*******************      INTEGRATION IN THE DOM       *********************/
 /**************************************************************************/
@@ -210,10 +220,12 @@
       select.appendChild(optionDOM);
     });
   }
+
   function displayAllSelect() {
     displayOptionForType(ingredientsArray, "ingredientsSelect", 'ingredient');
     displayOptionForType(appareilsArray, "appareilsSelect", 'appareil');
     displayOptionForType(ustensilsArray, "ustensilesSelect", 'ustensile');
+    displayOptionForType(ustensilsArray, "ustensilesList", 'ustensile')
   } displayAllSelect();
   /**** RECIPES CARDS INTEGRATION ****/
   function displayRecipes(recipesList) {
@@ -249,5 +261,4 @@
 let test = document.getElementById("search_icon");
 test.addEventListener("click", () => {
   console.log(selectedItemsArray);
-  console.log(selectedItemsArrayValue);
 });

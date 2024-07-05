@@ -107,7 +107,7 @@ nav{
     flex-flow: row nowrap;
     align-items: center;
 }
-.optionItem:hover{
+option:hover{
     background-color: #FFD15B;
 }
 select{
