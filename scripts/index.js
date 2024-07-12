@@ -119,7 +119,6 @@
   /** TEMPLATE SELECTED TAG **/
   /***************************/
     function tamplateTag(selectedTag, index) {
-      console.log(selectedTag);
       const divSelectedItems = document.getElementById("selectedItems");
 
       const divSelectedItem = document.createElement("div");
@@ -148,41 +147,56 @@
 /***************************/
 /**  UPDATE RECIPES LIST  **/
 /***************************/
-  function updateRecipesList(selectedTags, textSearch) {
-
-    recipes.forEach((recipe) => {
-      let isCorrect = true;
-      if (/* ingredients.ingredient */true === true) {
-        // ingredients
-        isCorrect = false;
+function updateRecipesList(selectedItemsArray, textSearch) {
+  const filteredRecipesByTags = recipes.filter((recipe) => {
+    let isOk = true;
+    selectedItemsArray.forEach((item) => {
+      if (item.label === "ingredient") {
+        if (!recipe.ingredients.includes(item.value)) {
+          isOk = false;
+        }
       }
-      if (true === true) {
-        // appliances
-        isCorrect = false;
+      if (item.label === "appareil") {
+        if (item.value !== recipe.appliance) {
+          isOk = false;
+        }
       }
-      if (true === true) {
-        // ustensils
-      }
-
-      if (isCorrect === true) {
-        filteredRecipes.push(recipe);
+      if (item.label === "ustensile") {
+        if (!recipe.ustensils.includes(item.value)) {
+          isOk = false;
+        }
       }
     });
+    return isOk;
+  });
+  console.log(filteredRecipesByTags);
+  
+  let numberOfRecipes = filteredRecipesByTags.length
+  updateRecipesNumber(numberOfRecipes);
+  return filteredRecipesByTags; // [{ }] => 20
+  
+}
 
-    // displayRecipes(filteredRecipes);
-    updateRecipesNumber();
-  }
+// ...
+//const newRecipes = updateRecipesList(tags, "");
+//displayRecipes(newRecipes);
+
+//displayIngredientsSelect(newRecipes);
+
+
 /****************************/
 /** UPDATE RECIPES NUMBER **/
 /**************************/  
+
   const displayedRecipesNumber = document.getElementById('recipes_number')
-  function updateRecipesNumber(){
-    if(filteredRecipes.length > 1){
-      displayedRecipesNumber.innerHTML = filteredRecipes.length +" recettes"
+  function updateRecipesNumber(updatedNumberRecipes){
+    if(updatedNumberRecipes > 1){
+      displayedRecipesNumber.innerHTML = updatedNumberRecipes +" recettes"
     }else{
-      displayedRecipesNumber.innerHTML = filteredRecipes.length +" recette"
+      displayedRecipesNumber.innerHTML = updatedNumberRecipes +" recette"
     }
   }
+
 /****************************************************************************/
 /*******************      INTEGRATION IN THE DOM       *********************/
 /**************************************************************************/
