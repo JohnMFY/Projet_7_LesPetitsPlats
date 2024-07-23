@@ -308,6 +308,7 @@ test.addEventListener("click", () => {
       selectedItemsUpdate(ustensilOption);
     } updateAllSelect();
   /*****************************/
+  
 /***********************************************************************/ 
 let ustensilesList = document.getElementById('ustensilesList');
 let ustensiles = document.querySelectorAll(".ustensile");
