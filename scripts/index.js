@@ -308,7 +308,7 @@ test.addEventListener("click", () => {
       selectedItemsUpdate(ustensilOption);
     } updateAllSelect();
   /*****************************/
-  
+
 /***********************************************************************/ 
 let ustensilesList = document.getElementById('ustensilesList');
 let ustensiles = document.querySelectorAll(".ustensile");
@@ -333,5 +333,7 @@ ustensilesSearch.onkeyup = function(){
   }
   else{
     console.log(input)
+    let searchResult = ustensilsArray.filter((ustensilsArray) => ustensilsArray.includes(input))
+    console.log(searchResult)
   }
 }
