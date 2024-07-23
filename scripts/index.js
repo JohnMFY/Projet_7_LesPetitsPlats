@@ -309,3 +309,28 @@ test.addEventListener("click", () => {
     } updateAllSelect();
   /*****************************/
 /***********************************************************************/ 
+let ustensilesList = document.getElementById('ustensilesList');
+let ustensiles = document.querySelectorAll(".ustensile");
+function itemSelection(itemsList, items){
+  itemsList.addEventListener("click", () => {
+    items.forEach((item) => {
+      item.onclick = function() {
+        console.log(this.className +' '+ this.value);
+      }
+    })  
+  })
+}
+itemSelection(ustensilesList, ustensiles)
+
+let ustensilesSearch = document.getElementById("ustensilesOptions_search");
+
+ustensilesSearch.onkeyup = function(){
+  let input = ustensilesSearch.value;
+  if(input.length === 0 ){
+    console.log(ustensilsArray)
+    return ustensilsArray
+  }
+  else{
+    console.log(input)
+  }
+}
