@@ -4,6 +4,11 @@
   /** RECUPERATION DATA **/
     import { recipes } from "../data/recipes.js";
   /****** STORAGE &  ERADICATION OF DUPLICATE ******/
+  
+  /** STORAGE OF SELECTED/SORTED DATA **/
+  let selectedItemsArray = [];
+  let filteredRecipes = recipes;
+
     /** Remove duplicate **/
       function removeDuplicate(arrayTotal) {
         let arrayToLowercase = arrayTotal.map((item) => item.toLowerCase());
@@ -13,7 +18,7 @@
       let ingredientsArray = [];
       function getIngredientsData() {
         //à modifier partir d'une list de recette
-        recipes.forEach((recipe) => {
+        filteredRecipes.forEach((recipe) => {
           recipe.ingredients.forEach((ingredient) => {
             ingredientsArray.push(ingredient.ingredient);
           });
@@ -24,7 +29,7 @@
     /** Recuperation of appareils **/
       let appareilsArray = [];
       function getAppareilsData() {
-        recipes.forEach((recipe) => {
+        filteredRecipes.forEach((recipe) => {
           appareilsArray.push(recipe.appliance);
         });
 
@@ -33,18 +38,13 @@
     /** Recuperation of USTENSILS **/
       let ustensilsArray = [];
       function getUstensilsData() {
-        recipes.forEach((recipe) => {
+        filteredRecipes.forEach((recipe) => {
           recipe.ustensils.forEach((ustensil) => {
             ustensilsArray.push(ustensil);
           });
         });
         ustensilsArray = removeDuplicate(ustensilsArray);
       } getUstensilsData();
-/*******************************************************/
-
-/** STORAGE OF SELECTED/SORTED DATA **/
-  let selectedItemsArray = [];
-  let filteredRecipes = [];
 
 /************************************************/
 /******************* TEMPLATES *****************/
@@ -212,11 +212,13 @@ function updateRecipesList(selectedItemsArray, textSearch) {
 
   let numberOfRecipes = filteredRecipesByText.length;
   updateRecipesNumber(numberOfRecipes);
-  return filteredRecipesByText; // [{ }] => 20
+  filteredRecipes = filteredRecipesByText
+  
+  return filteredRecipes;
 }
 
-let test = document.getElementById("search_icon");
-test.addEventListener("click", () => {
+let searchBtn = document.getElementById("search_icon");
+searchBtn.addEventListener("click", () => {
   const textValue = document.getElementById("search_input").value;
   updateRecipesList(selectedItemsArray, textValue);
 });
@@ -233,7 +235,7 @@ test.addEventListener("click", () => {
       displayedRecipesNumber.innerHTML = updatedNumberRecipes +" recette"
     }
   }
-
+  
 /****************************************************************************/
 /*******************      INTEGRATION IN THE DOM       *********************/
 /**************************************************************************/
@@ -246,6 +248,7 @@ test.addEventListener("click", () => {
     }
     updateRecipesList(selectedItemsArray, "");
     displayAllSelect();
+
   }
   function getOnlyTagsNotDisplayed(baseArray) {
     return baseArray.filter((value) => {
@@ -257,6 +260,7 @@ test.addEventListener("click", () => {
       });
       return !found;
     });
+
   }
   /**** INGREDIENTS OPTION INTEGRATION ****/
   function displayOptionForType(array, selectId, className) {
@@ -278,6 +282,7 @@ test.addEventListener("click", () => {
     displayOptionForType(ustensilsArray, "ustensilesSelect", 'ustensile');
     displayOptionForType(ustensilsArray, "ustensilesList", 'ustensile')
   } displayAllSelect();
+
   /**** RECIPES CARDS INTEGRATION ****/
   function displayRecipes(recipesList) {
     for (let i = 0; i < recipesList.length; i++) {
@@ -310,8 +315,10 @@ test.addEventListener("click", () => {
   /*****************************/
 
 /***********************************************************************/ 
+
 let ustensilesList = document.getElementById('ustensilesList');
 let ustensiles = document.querySelectorAll(".ustensile");
+
 function itemSelection(itemsList, items){
   itemsList.addEventListener("click", () => {
     items.forEach((item) => {
@@ -324,7 +331,6 @@ function itemSelection(itemsList, items){
 itemSelection(ustensilesList, ustensiles)
 
 let ustensilesSearch = document.getElementById("ustensilesOptions_search");
-
 ustensilesSearch.onkeyup = function(){
   let input = ustensilesSearch.value;
   if(input.length === 0 ){
