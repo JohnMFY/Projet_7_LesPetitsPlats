@@ -2,7 +2,7 @@
 /**** DATA STORAGE ****/
 /*********************/
   /** RECUPERATION DATA **/
-    import { recipes } from "../data/recipes.js";
+  import { recipes } from "../data/recipes.js";
   /****** STORAGE &  ERADICATION OF DUPLICATE ******/
   
   /** STORAGE OF SELECTED/SORTED DATA **/
@@ -151,7 +151,7 @@ function searchByTags(recipesList, selectedItemsArray) {
   return recipesList.filter((recipe) => {
     let isOk = true;
     selectedItemsArray.forEach((item) => {
-      if (item.label === "ingredient") {
+      if (item.label === "Ingredient") {
         let isIngredientFound = false;
         recipe.ingredients.forEach((ingredient) => {
           if (
@@ -165,13 +165,13 @@ function searchByTags(recipesList, selectedItemsArray) {
         }
       }
 
-      if (item.label === "appareil") {
+      if (item.label === "Appareil") {
         if (item.value.toLowerCase() !== recipe.appliance.toLocaleLowerCase()) {
           isOk = false;
         }
       }
 
-      if (item.label === "ustensile") {
+      if (item.label === "Ustensile") {
         if (!recipe.ustensils.includes(item.value.toLocaleLowerCase())) {
           isOk = false;
         }
@@ -263,10 +263,33 @@ searchBtn.addEventListener("click", () => {
 
   }
   /**** INGREDIENTS OPTION INTEGRATION ****/
-  function displayOptionForType(array, selectId, className) {
+  function displayOptionForType(array, selectId, className, boxSearchId, inputId) {
     const optionsToDisplay = getOnlyTagsNotDisplayed(array);
-    let select = document.getElementById(selectId);
+    const select = document.getElementById(selectId);
     select.innerHTML = "";
+
+    let optionTitle = document.createElement("option");
+    optionTitle.setAttribute('value', " ")
+    optionTitle.setAttribute('selected', '')
+    optionTitle.setAttribute('hidden', '')
+    optionTitle.textContent = className
+    select.appendChild(optionTitle)
+/*
+    let divInput = document.createElement('div')
+    divInput.setAttribute('class', 'search_input_option')
+    divInput.setAttribute('id', boxSearchId)
+    let input = document.createElement('input')
+    input.setAttribute('type', 'search')
+    input.setAttribute('id', inputId)
+    let spanIcon = document.createElement('span')
+    spanIcon.setAttribute('class',"search_icon_option")
+    let icon = document.createElement('i')
+    icon.setAttribute('class', "fa-solid fa-magnifying-glass fa")
+    divInput.appendChild(input)
+    divInput.appendChild(spanIcon)
+    spanIcon.appendChild(icon)
+    select.appendChild(divInput)
+*/
     optionsToDisplay.forEach((option) => {
       const optionDOM = document.createElement("option");
       optionDOM.setAttribute('class',className);
@@ -277,10 +300,9 @@ searchBtn.addEventListener("click", () => {
   }
 
   function displayAllSelect() {
-    displayOptionForType(ingredientsArray, "ingredientsSelect", 'ingredient');
-    displayOptionForType(appareilsArray, "appareilsSelect", 'appareil');
-    displayOptionForType(ustensilsArray, "ustensilesSelect", 'ustensile');
-    displayOptionForType(ustensilsArray, "ustensilesList", 'ustensile')
+    displayOptionForType(ingredientsArray, "ingredientsSelect", 'Ingredient',"ingredientsOptions_searchBox","ingredientsOptions_search");
+    displayOptionForType(appareilsArray, "appareilsSelect", 'Appareil',"appareilsOptions_searchBox","appareilsOptions_search");
+    displayOptionForType(ustensilsArray, "ustensilesSelect", 'Ustensile',"ustensilesOptions_searchBox","ustensilesOptions_search");
   } displayAllSelect();
 
   /**** RECIPES CARDS INTEGRATION ****/
@@ -315,7 +337,7 @@ searchBtn.addEventListener("click", () => {
   /*****************************/
 
 /***********************************************************************/ 
-
+/*
 let ustensilesList = document.getElementById('ustensilesList');
 let ustensiles = document.querySelectorAll(".ustensile");
 
@@ -343,3 +365,4 @@ ustensilesSearch.onkeyup = function(){
     console.log(searchResult)
   }
 }
+*/
