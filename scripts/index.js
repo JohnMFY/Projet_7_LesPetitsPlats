@@ -16,34 +16,31 @@
     /** Recuperation of ingredients **/
       let ingredientsArray = [];
       function getIngredientsData(recipesToDisplay) {
-        //à modifier partir d'une list de recette
         recipesToDisplay.forEach((recipe) => {
           recipe.ingredients.forEach((ingredient) => {
             ingredientsArray.push(ingredient.ingredient);
           });
         });
-
         ingredientsArray = removeDuplicate(ingredientsArray);
       } getIngredientsData(recipes);
     /** Recuperation of appareils **/
       let appareilsArray = [];
-      function getAppareilsData() {
-        recipes.forEach((recipe) => {
+      function getAppareilsData(recipesToDisplay) {
+        recipesToDisplay.forEach((recipe) => {
           appareilsArray.push(recipe.appliance);
         });
-
         appareilsArray = removeDuplicate(appareilsArray);
-      } getAppareilsData();
+      } getAppareilsData(recipes);
     /** Recuperation of USTENSILS **/
       let ustensilsArray = [];
-      function getUstensilsData() {
-        recipes.forEach((recipe) => {
+      function getUstensilsData(recipesToDisplay) {
+        recipesToDisplay.forEach((recipe) => {
           recipe.ustensils.forEach((ustensil) => {
             ustensilsArray.push(ustensil);
           });
         });
         ustensilsArray = removeDuplicate(ustensilsArray);
-      } getUstensilsData();
+      } getUstensilsData(recipes);
 
 /************************************************/
 /******************* TEMPLATES *****************/
@@ -231,15 +228,16 @@
   searchBtn.addEventListener("click", () => { 
     const textValue = document.getElementById("search_input").value;
     updateRecipesList(selectedItemsArray, textValue);
+
+    /* UPDATE THE OPTION */
     const recipesFiltered = updateRecipesList(selectedItemsArray, textValue);
     ingredientsArray = []
-    console.log('1st' + ingredientsArray)
     getIngredientsData(recipesFiltered)
-    //
-    //
-    console.log('2nd' + ingredientsArray)
-    displayAllSelect()
-    
+    appareilsArray = []
+    getAppareilsData(recipesFiltered)
+    ustensilsArray = []
+    getUstensilsData(recipesFiltered)
+    displayAllSelect()   
   });
 /****************************/
 /** UPDATE RECIPES NUMBER **/
@@ -343,13 +341,14 @@
           value: selectId.value,
         };
         selectedItemsArray.push(optionSelected);
+        const filteredRecipes = searchByTags(recipes, selectedItemsArray);
+        ingredientsArray = [];
+        getIngredientsData(filteredRecipes);
+        appareilsArray = [];
+        getAppareilsData(filteredRecipes);
+        ustensilsArray = [];
+        getUstensilsData(filteredRecipes);
         displayTag();
-        const test = searchByTags(recipes, selectedItemsArray);
-        //
-        //
-        ingredientsArray = []
-        getIngredientsData(test)
-        displayAllSelect()
       });
     }
     function updateAllSelect() {
