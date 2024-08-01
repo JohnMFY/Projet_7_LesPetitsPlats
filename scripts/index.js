@@ -129,13 +129,7 @@
 
       deleteIcon.addEventListener("click", () => {
         selectedItemsArray.splice(index, 1);
-        const test = searchByTags(recipes, selectedItemsArray);
-        //
-        //
-        ingredientsArray = []
-        getIngredientsData(test)
-        displayAllSelect()
-        displayTag();
+        updateDom()
       });
 
       divSelectedItems.appendChild(divSelectedItem);
@@ -237,7 +231,9 @@
     getAppareilsData(recipesFiltered)
     ustensilsArray = []
     getUstensilsData(recipesFiltered)
-    displayAllSelect()   
+    displayAllSelect() 
+    recipesSection.innerHTML = ''
+    displayRecipes(recipesFiltered)  
   });
 /****************************/
 /** UPDATE RECIPES NUMBER **/
@@ -341,15 +337,21 @@
           value: selectId.value,
         };
         selectedItemsArray.push(optionSelected);
-        const filteredRecipes = searchByTags(recipes, selectedItemsArray);
-        ingredientsArray = [];
-        getIngredientsData(filteredRecipes);
-        appareilsArray = [];
-        getAppareilsData(filteredRecipes);
-        ustensilsArray = [];
-        getUstensilsData(filteredRecipes);
-        displayTag();
+        updateDom()
       });
+    }
+    function updateDom(){
+      const textValue = document.getElementById("search_input").value;
+      const recipesFiltered = updateRecipesList(selectedItemsArray, textValue);
+      ingredientsArray = [];
+      getIngredientsData(recipesFiltered);
+      appareilsArray = [];
+      getAppareilsData(recipesFiltered);
+      ustensilsArray = [];
+      getUstensilsData(recipesFiltered);
+      displayTag();
+      recipesSection.innerHTML = ''
+      displayRecipes(recipesFiltered)
     }
     function updateAllSelect() {
       selectedItemsUpdate(ingredientOption);
