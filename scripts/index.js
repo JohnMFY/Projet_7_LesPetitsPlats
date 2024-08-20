@@ -331,8 +331,12 @@
 /*******************************/
   /**** SELECTION OF OPTION ****/
     const ingredientOption = document.getElementById("ingredientsList");
+    let ingredientsDisplayed = document.querySelectorAll('.Ingredient')
     const appareilOption = document.getElementById("appareilsList")
+    let appareilsDisplayed = document.querySelectorAll('.Appareil')
     const ustensilOption = document.getElementById("ustensilesList");
+    let ustensilsDisplayed = document.querySelectorAll('.Ustensile')
+    /*
     function selectedItemsUpdate(selectId){
       selectId.addEventListener("click", () => {
         const optionSelected= {
@@ -342,19 +346,18 @@
         selectedItemsArray.push(optionSelected);
         updateDom()
       });
-    }
+    }*/
         function itemSelection(optionsList){
           optionsList.forEach((option) => {
-              option.onclick = function() {
-                console.log(this.className +' '+ this.innerHTML);
+            option.addEventListener('click', () =>{
                 const optionSelected= {
-                  label: this.className,
-                  value: this.innerHTML,
+                  label: option.className ,
+                  value: option.innerHTML,
                 };
                 selectedItemsArray.push(optionSelected);
                 updateDom()
-              }
             })  
+          })
         }
     function updateDom(){
       const textValue = document.getElementById("search_input").value;
@@ -373,9 +376,9 @@
       selectedItemsUpdate(ingredientOption);
       selectedItemsUpdate(appareilOption);
       selectedItemsUpdate(ustensilOption);*/
-      itemSelection(ingredientOption.childNodes)
-      itemSelection(appareilOption.childNodes)
-      itemSelection(ustensilOption.childNodes)
+      itemSelection(ingredientOption.childNodes,ingredientsDisplayed)
+      itemSelection(appareilOption.childNodes,appareilsDisplayed)
+      itemSelection(ustensilOption.childNodes,ustensilsDisplayed)
 
     } updateAllSelect();
   /*****************************/
