@@ -278,14 +278,14 @@
     const optionsToDisplay = getOnlyTagsNotDisplayed(array);
     const select = document.getElementById(selectId);
     select.innerHTML = "";
-
-    let optionTitle = document.createElement("option");
+/*
+    let optionTitle = document.createElement("li");
     optionTitle.setAttribute('value', " ")
     optionTitle.setAttribute('selected', '')
     optionTitle.setAttribute('hidden', '')
     optionTitle.textContent = className
     select.appendChild(optionTitle)
-/*
+
     let divInput = document.createElement('div')
     divInput.setAttribute('class', 'search_input_option')
     divInput.setAttribute('id', boxSearchId)
@@ -302,7 +302,7 @@
     select.appendChild(divInput)
 */
     optionsToDisplay.forEach((option) => {
-      const optionDOM = document.createElement("option");
+      const optionDOM = document.createElement("li");
       optionDOM.setAttribute('class',className);
       optionDOM.setAttribute("value", option);
       optionDOM.textContent = option;
@@ -311,9 +311,12 @@
   }
 
   function displayAllSelect() {
-    displayOptionForType(ingredientsArray, "ingredientsSelect", 'Ingredient',"ingredientsOptions_searchBox","ingredientsOptions_search");
-    displayOptionForType(appareilsArray, "appareilsSelect", 'Appareil',"appareilsOptions_searchBox","appareilsOptions_search");
-    displayOptionForType(ustensilsArray, "ustensilesSelect", 'Ustensile',"ustensilesOptions_searchBox","ustensilesOptions_search");
+  //  displayOptionForType(ingredientsArray, "ingredientsSelect", 'Ingredient',"ingredientsOptions_searchBox","ingredientsOptions_search");
+  //  displayOptionForType(appareilsArray, "appareilsSelect", 'Appareil',"appareilsOptions_searchBox","appareilsOptions_search");
+  //  displayOptionForType(ustensilsArray, "ustensilesSelect", 'Ustensile',"ustensilesOptions_searchBox","ustensilesOptions_search");
+    displayOptionForType(ingredientsArray, "ingredientsList", 'Ingredient',"ingredientsOptions_searchBox","ingredientsOptions_search");
+    displayOptionForType(appareilsArray, "appareilsList", 'Appareil',"appareilsOptions_searchBox","appareilsOptions_search");
+    displayOptionForType(ustensilsArray, "ustensilesList", 'Ustensile',"ustensilesOptions_searchBox","ustensilesOptions_search")
   } displayAllSelect();
 
   /**** RECIPES CARDS INTEGRATION ****/
@@ -327,11 +330,11 @@
 /** FUNCTIONS OF DYNAMISATION **/
 /*******************************/
   /**** SELECTION OF OPTION ****/
-    const ingredientOption = document.getElementById("ingredientsSelect");
-    const appareilOption = document.getElementById("appareilsSelect");
-    const ustensilOption = document.getElementById("ustensilesSelect");
+    const ingredientOption = document.getElementById("ingredientsList");
+    const appareilOption = document.getElementById("appareilsList")
+    const ustensilOption = document.getElementById("ustensilesList");
     function selectedItemsUpdate(selectId){
-      selectId.addEventListener("change", () => {
+      selectId.addEventListener("click", () => {
         const optionSelected= {
           label: selectId.lastChild.className,
           value: selectId.value,
@@ -340,6 +343,19 @@
         updateDom()
       });
     }
+        function itemSelection(optionsList){
+          optionsList.forEach((option) => {
+              option.onclick = function() {
+                console.log(this.className +' '+ this.innerHTML);
+                const optionSelected= {
+                  label: this.className,
+                  value: this.innerHTML,
+                };
+                selectedItemsArray.push(optionSelected);
+                updateDom()
+              }
+            })  
+        }
     function updateDom(){
       const textValue = document.getElementById("search_input").value;
       const recipesFiltered = updateRecipesList(selectedItemsArray, textValue);
@@ -353,40 +369,38 @@
       recipesSection.innerHTML = ''
       displayRecipes(recipesFiltered)
     }
-    function updateAllSelect() {
+    function updateAllSelect() {/*
       selectedItemsUpdate(ingredientOption);
       selectedItemsUpdate(appareilOption);
-      selectedItemsUpdate(ustensilOption);
+      selectedItemsUpdate(ustensilOption);*/
+      itemSelection(ingredientOption.childNodes)
+      itemSelection(appareilOption.childNodes)
+      itemSelection(ustensilOption.childNodes)
+
     } updateAllSelect();
   /*****************************/
 
 /***********************************************************************/ 
-/*
-let ustensilesList = document.getElementById('ustensilesList');
-let ustensiles = document.querySelectorAll(".ustensile");
 
-function itemSelection(itemsList, items){
-  itemsList.addEventListener("click", () => {
-    items.forEach((item) => {
-      item.onclick = function() {
-        console.log(this.className +' '+ this.value);
-      }
-    })  
-  })
-}
-itemSelection(ustensilesList, ustensiles)
-
-let ustensilesSearch = document.getElementById("ustensilesOptions_search");
-ustensilesSearch.onkeyup = function(){
-  let input = ustensilesSearch.value;
-  if(input.length === 0 ){
-    console.log(ustensilsArray)
-    return ustensilsArray
-  }
-  else{
-    console.log(input)
-    let searchResult = ustensilsArray.filter((ustensilsArray) => ustensilsArray.includes(input))
-    console.log(searchResult)
+function optionListSearch(searchInput, optionArray){
+  searchInput.onkeyup = function(){
+    let input = searchInput.value;
+    if(input.length === 0 ){
+      console.log(optionArray)
+      return optionArray
+    }
+    else{
+      console.log(input)
+      let searchResult = optionArray.filter((optionArray) => optionArray.includes(input))
+      console.log(searchResult)
+    }
   }
 }
-*/
+function allOptionListSearch(){
+  let ingredientsSearch = document.getElementById("ingredientsOptions_search");
+  optionListSearch(ingredientsSearch, ingredientsArray)
+  let appareilsSearch = document.getElementById("appareilsOptions_search");
+  optionListSearch(appareilsSearch, appareilsArray)
+  let ustensilesSearch = document.getElementById("ustensilesOptions_search");
+  optionListSearch(ustensilesSearch, ustensilsArray)
+}allOptionListSearch()

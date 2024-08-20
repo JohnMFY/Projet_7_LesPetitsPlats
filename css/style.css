@@ -107,9 +107,7 @@ nav{
     flex-flow: row nowrap;
     align-items: center;
 }
-option:hover{
-    background-color: #FFD15B;
-}
+
 select{
     font-size: large;
     font-weight: 500;
@@ -253,4 +251,7 @@ li{
     display: flex;
     flex-flow: row nowrap;
     width: 80%;
+}
+li:hover{
+    background-color: #FFD15B;
 }

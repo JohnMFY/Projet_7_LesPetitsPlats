@@ -29,22 +29,65 @@
     </div>
  </header>
  <nav>
+    <!--
     <div id="options_selection">
         <select class="select" id="ingredientsSelect"></select>
         <select class="select" id="appareilsSelect"></select>
         <select class="select" id="ustensilesSelect"></select>
     </div>
+-->
+
+    <div class="dropdown select" id="ingredientsOptions_box">
+        <button class="btn dropdown-toggle options_btn" type="button" id="ingredientsOptions_btn" data-bs-toggle="dropdown" aria-expanded="false">
+          Ingredients
+        </button>
+        <ul class="dropdown-menu" >
+            <div class="search_input_option" id="ingredientsOptions_searchBox">
+                <input type="search" id="ingredientsOptions_search">
+                <span class="search_icon_option">
+                    <i class="fa-solid fa-magnifying-glass fa"></i>
+                </span>
+            </div>
+            <div id="ingredientsList"></div>
+        </ul>
+    </div>
+
+    <div class="dropdown select" id="appareilsOptions_box">
+        <button class="btn dropdown-toggle options_btn" type="button" id="appareilsOptions_btn" data-bs-toggle="dropdown" aria-expanded="false">
+          Appareils
+        </button>
+        <ul class="dropdown-menu" >
+            <div class="search_input_option" id="appareilsOptions_searchBox">
+                <input type="search" id="appareilsOptions_search">
+                <span class="search_icon_option">
+                    <i class="fa-solid fa-magnifying-glass fa"></i>
+                </span>
+            </div>
+            <div id="appareilsList"></div>
+        </ul>
+    </div>
+
+    <div class="dropdown select" id="ustensilesOptions_box">
+        <button class="btn dropdown-toggle options_btn" type="button" id="ustensilesOptions_btn" data-bs-toggle="dropdown" aria-expanded="false">
+          Ustensiles
+        </button>
+        <ul class="dropdown-menu" >
+            <div class="search_input_option" id="ustensilesOptions_searchBox">
+                <input type="search" id="ustensilesOptions_search">
+                <span class="search_icon_option">
+                    <i class="fa-solid fa-magnifying-glass fa"></i>
+                </span>
+            </div>
+            <div id="ustensilesList"></div>
+        </ul>
+    </div>
 
     <h3 id="recipes_number">1500 recettes</h3>
  </nav>
+
  <main>
-    <div id="selectedItems"> 
-       
-    </div>
-
-    <section id="recipesSection">
-
-    </section>
+    <div id="selectedItems"></div>
+    <section id="recipesSection"></section>
  </main>
  
 <script src="./data/recipes.js" type="module"></script>
