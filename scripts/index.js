@@ -332,6 +332,7 @@
       displayTag();
       recipesSection.innerHTML = ''
       displayRecipes(recipesFiltered)
+      updateAllSelect()
     }
 
     function updateAllSelect() {
