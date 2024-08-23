@@ -207,8 +207,7 @@
 /** UPDATE RECIPES LIST WITH TAGS AND TEXT **/
   function updateRecipesList(selectedItemsArray, textSearch) {
     const filteredRecipesByTags = searchByTags(recipes, selectedItemsArray);
-    const filteredRecipesByText = searchByText(filteredRecipesByTags, textSearch); // recipes total
-    console.log(filteredRecipesByText);
+    const filteredRecipesByText = searchByText(filteredRecipesByTags, textSearch);
 
     let numberOfRecipes = filteredRecipesByText.length;
     updateRecipesNumber(numberOfRecipes);
@@ -274,33 +273,10 @@
     });
   }
   /**** INGREDIENTS OPTION INTEGRATION ****/
-  function displayOptionForType(array, selectId, className, boxSearchId, inputId) {
+  function displayOptionForType(array, boxList, className) {
     const optionsToDisplay = getOnlyTagsNotDisplayed(array);
-    const select = document.getElementById(selectId);
+    const select = document.getElementById(boxList);
     select.innerHTML = "";
-/*
-    let optionTitle = document.createElement("li");
-    optionTitle.setAttribute('value', " ")
-    optionTitle.setAttribute('selected', '')
-    optionTitle.setAttribute('hidden', '')
-    optionTitle.textContent = className
-    select.appendChild(optionTitle)
-
-    let divInput = document.createElement('div')
-    divInput.setAttribute('class', 'search_input_option')
-    divInput.setAttribute('id', boxSearchId)
-    let input = document.createElement('input')
-    input.setAttribute('type', 'search')
-    input.setAttribute('id', inputId)
-    let spanIcon = document.createElement('span')
-    spanIcon.setAttribute('class',"search_icon_option")
-    let icon = document.createElement('i')
-    icon.setAttribute('class', "fa-solid fa-magnifying-glass fa")
-    divInput.appendChild(input)
-    divInput.appendChild(spanIcon)
-    spanIcon.appendChild(icon)
-    select.appendChild(divInput)
-*/
     optionsToDisplay.forEach((option) => {
       const optionDOM = document.createElement("li");
       optionDOM.setAttribute('class',className);
@@ -311,12 +287,9 @@
   }
 
   function displayAllSelect() {
-  //  displayOptionForType(ingredientsArray, "ingredientsSelect", 'Ingredient',"ingredientsOptions_searchBox","ingredientsOptions_search");
-  //  displayOptionForType(appareilsArray, "appareilsSelect", 'Appareil',"appareilsOptions_searchBox","appareilsOptions_search");
-  //  displayOptionForType(ustensilsArray, "ustensilesSelect", 'Ustensile',"ustensilesOptions_searchBox","ustensilesOptions_search");
-    displayOptionForType(ingredientsArray, "ingredientsList", 'Ingredient',"ingredientsOptions_searchBox","ingredientsOptions_search");
-    displayOptionForType(appareilsArray, "appareilsList", 'Appareil',"appareilsOptions_searchBox","appareilsOptions_search");
-    displayOptionForType(ustensilsArray, "ustensilesList", 'Ustensile',"ustensilesOptions_searchBox","ustensilesOptions_search")
+    displayOptionForType(ingredientsArray, "ingredientsList", 'Ingredient');
+    displayOptionForType(appareilsArray, "appareilsList", 'Appareil');
+    displayOptionForType(ustensilsArray, "ustensilesList", 'Ustensile')
   } displayAllSelect();
 
   /**** RECIPES CARDS INTEGRATION ****/
@@ -331,34 +304,22 @@
 /*******************************/
   /**** SELECTION OF OPTION ****/
     const ingredientOption = document.getElementById("ingredientsList");
-    let ingredientsDisplayed = document.querySelectorAll('.Ingredient')
     const appareilOption = document.getElementById("appareilsList")
-    let appareilsDisplayed = document.querySelectorAll('.Appareil')
     const ustensilOption = document.getElementById("ustensilesList");
-    let ustensilsDisplayed = document.querySelectorAll('.Ustensile')
-    /*
-    function selectedItemsUpdate(selectId){
-      selectId.addEventListener("click", () => {
-        const optionSelected= {
-          label: selectId.lastChild.className,
-          value: selectId.value,
-        };
-        selectedItemsArray.push(optionSelected);
-        updateDom()
-      });
-    }*/
-        function itemSelection(optionsList){
-          optionsList.forEach((option) => {
-            option.addEventListener('click', () =>{
-                const optionSelected= {
-                  label: option.className ,
-                  value: option.innerHTML,
-                };
-                selectedItemsArray.push(optionSelected);
-                updateDom()
-            })  
-          })
-        }
+
+    function itemSelection(optionsList){
+      optionsList.forEach((option) => {
+        option.addEventListener('click', () =>{
+            const optionSelected= {
+              label: option.className ,
+              value: option.innerHTML,
+            };
+            selectedItemsArray.push(optionSelected);
+            updateDom()
+        })  
+      })
+    }
+    
     function updateDom(){
       const textValue = document.getElementById("search_input").value;
       const recipesFiltered = updateRecipesList(selectedItemsArray, textValue);
@@ -372,38 +333,38 @@
       recipesSection.innerHTML = ''
       displayRecipes(recipesFiltered)
     }
-    function updateAllSelect() {/*
-      selectedItemsUpdate(ingredientOption);
-      selectedItemsUpdate(appareilOption);
-      selectedItemsUpdate(ustensilOption);*/
-      itemSelection(ingredientOption.childNodes,ingredientsDisplayed)
-      itemSelection(appareilOption.childNodes,appareilsDisplayed)
-      itemSelection(ustensilOption.childNodes,ustensilsDisplayed)
+
+    function updateAllSelect() {
+      itemSelection(ingredientOption.childNodes)
+      itemSelection(appareilOption.childNodes)
+      itemSelection(ustensilOption.childNodes)
 
     } updateAllSelect();
   /*****************************/
 
 /***********************************************************************/ 
 
-function optionListSearch(searchInput, optionArray){
+function optionListSearch(searchInput, optionArray, boxList, className){
   searchInput.onkeyup = function(){
     let input = searchInput.value;
     if(input.length === 0 ){
-      console.log(optionArray)
+      
       return optionArray
     }
     else{
       console.log(input)
       let searchResult = optionArray.filter((optionArray) => optionArray.includes(input))
       console.log(searchResult)
+      displayOptionForType(searchResult,boxList, className)
+      
     }
   }
 }
 function allOptionListSearch(){
   let ingredientsSearch = document.getElementById("ingredientsOptions_search");
-  optionListSearch(ingredientsSearch, ingredientsArray)
+  optionListSearch(ingredientsSearch, ingredientsArray, "ingredientsList", 'Ingredient')
   let appareilsSearch = document.getElementById("appareilsOptions_search");
-  optionListSearch(appareilsSearch, appareilsArray)
+  optionListSearch(appareilsSearch, appareilsArray, "appareilsList", 'Appareil')
   let ustensilesSearch = document.getElementById("ustensilesOptions_search");
-  optionListSearch(ustensilesSearch, ustensilsArray)
+  optionListSearch(ustensilesSearch, ustensilsArray,"ustensilesList", 'Ustensile')
 }allOptionListSearch()
