@@ -348,24 +348,45 @@
 function optionListSearch(searchInput, optionArray, boxList, className){
   searchInput.onkeyup = function(){
     let input = searchInput.value;
+    const textValue = document.getElementById("search_input").value;
+    const recipesFiltered = updateRecipesList(selectedItemsArray, textValue);
     if(input.length === 0 ){
       
       return optionArray
     }
-    else{
-      console.log(input)
-      let searchResult = optionArray.filter((optionArray) => optionArray.includes(input))
+    if(className === 'Ingredient'){
+      ingredientsArray = [];
+      getIngredientsData(recipesFiltered);
+      let searchResult = ingredientsArray.filter((ingredientsArray) => ingredientsArray.includes(input))
       console.log(searchResult)
       displayOptionForType(searchResult,boxList, className)
-      
+      updateAllSelect()
+    }
+    if(className === 'Appareil'){
+      appareilsArray = [];
+      getAppareilsData(recipesFiltered);
+      let searchResult = appareilsArray.filter((appareilsArray) => appareilsArray.includes(input))
+      console.log(searchResult)
+      displayOptionForType(searchResult,boxList, className)
+      updateAllSelect()
+    }
+    if(className === 'Ustensile'){
+      ustensilsArray = [];
+      getUstensilsData(recipesFiltered);
+      let searchResult = ustensilsArray.filter((ustensilsArray) => ustensilsArray.includes(input))
+      console.log(searchResult)
+      displayOptionForType(searchResult,boxList, className)
+      updateAllSelect()
     }
   }
 }
 function allOptionListSearch(){
   let ingredientsSearch = document.getElementById("ingredientsOptions_search");
   optionListSearch(ingredientsSearch, ingredientsArray, "ingredientsList", 'Ingredient')
+
   let appareilsSearch = document.getElementById("appareilsOptions_search");
   optionListSearch(appareilsSearch, appareilsArray, "appareilsList", 'Appareil')
+
   let ustensilesSearch = document.getElementById("ustensilesOptions_search");
   optionListSearch(ustensilesSearch, ustensilsArray,"ustensilesList", 'Ustensile')
 }allOptionListSearch()
