@@ -306,6 +306,9 @@
     const ingredientOption = document.getElementById("ingredientsList");
     const appareilOption = document.getElementById("appareilsList")
     const ustensilOption = document.getElementById("ustensilesList");
+    let ingredientsSearch = document.getElementById("ingredientsOptions_search");
+    let appareilsSearch = document.getElementById("appareilsOptions_search");
+    let ustensilesSearch = document.getElementById("ustensilesOptions_search");
 
     function itemSelection(optionsList){
       optionsList.forEach((option) => {
@@ -315,6 +318,9 @@
               value: option.innerHTML,
             };
             selectedItemsArray.push(optionSelected);
+            ingredientsSearch.value = ''
+            appareilsSearch.value = ''
+            ustensilesSearch.value = ''
             updateDom()
             console.log('click tag')
         })  
@@ -348,15 +354,16 @@
 
 /***********************************************************************/ 
 
-function optionListSearch(searchInput, optionArray, boxList, className){
+function optionListSearch(searchInput, optionArray, boxList, className, getOptionData){
     searchInput.addEventListener('keyup', () =>{
     let input = searchInput.value;
     const textValue = document.getElementById("search_input").value;
     const recipesFiltered = updateRecipesList(selectedItemsArray, textValue);
     if(input.length === 0 ){
+      updateDom()
       displayOptionForType(optionArray,boxList, className)
       return optionArray
-    }
+    }/*
     if(className === 'Ingredient'){
       getIngredientsData(recipesFiltered);
       let searchResult = ingredientsArray.filter((ingredientsArray) => ingredientsArray.includes(input))
@@ -377,6 +384,13 @@ function optionListSearch(searchInput, optionArray, boxList, className){
       console.log(searchResult)
       displayOptionForType(searchResult,boxList, className)
       updateAllSelect()
+    }*/
+    else{
+      getOptionData;
+      let searchResult = optionArray.filter((optionArray)=>optionArray.includes(input));
+      console.log(searchResult)
+      displayOptionForType(searchResult,boxList, className)
+      updateAllSelect()
     }
   console.log('OptionListSearch()')
 })  
@@ -386,13 +400,13 @@ function allOptionListSearch(){
   const recipesFiltered = updateRecipesList(selectedItemsArray, textValue);
 
   let ingredientsSearch = document.getElementById("ingredientsOptions_search");
-  optionListSearch(ingredientsSearch, ingredientsArray, "ingredientsList", 'Ingredient')
+  optionListSearch(ingredientsSearch, ingredientsArray, "ingredientsList", 'Ingredient', getIngredientsData(recipesFiltered))
 
   let appareilsSearch = document.getElementById("appareilsOptions_search");
-  optionListSearch(appareilsSearch, appareilsArray, "appareilsList", 'Appareil')
+  optionListSearch(appareilsSearch, appareilsArray, "appareilsList", 'Appareil', getAppareilsData(recipesFiltered))
 
   let ustensilesSearch = document.getElementById("ustensilesOptions_search");
-  optionListSearch(ustensilesSearch, ustensilsArray,"ustensilesList", 'Ustensile')
+  optionListSearch(ustensilesSearch, ustensilsArray,"ustensilesList", 'Ustensile', getUstensilsData(recipesFiltered))
   console.log('____________________')
   console.log('allOptionListSearch()')
 }allOptionListSearch()
