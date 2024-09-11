@@ -322,7 +322,6 @@
             appareilsSearch.value = ''
             ustensilesSearch.value = ''
             updateDom()
-            console.log('click tag')
         })  
       })
     }
@@ -340,75 +339,51 @@
       recipesSection.innerHTML = ''
       displayRecipes(recipesFiltered)
       updateAllSelect()
-      //allOptionListSearch()
-      console.log('updateDom()')
     }
 
     function updateAllSelect() {
       itemSelection(ingredientOption.childNodes)
       itemSelection(appareilOption.childNodes)
       itemSelection(ustensilOption.childNodes)
-      console.log('updateAllSelect')
     } updateAllSelect();
   /*****************************/
 
 /***********************************************************************/ 
 
-function optionListSearch(searchInput, optionArray, boxList, className, getOptionData){
+function optionListSearch(searchInput, optionArray, boxList, className){
     searchInput.addEventListener('keyup', () =>{
     let input = searchInput.value;
     const textValue = document.getElementById("search_input").value;
     const recipesFiltered = updateRecipesList(selectedItemsArray, textValue);
     if(input.length === 0 ){
-      updateDom()
-      displayOptionForType(optionArray,boxList, className)
+      displayAllSelect()
+      updateAllSelect()
       return optionArray
-    }/*
+    }
     if(className === 'Ingredient'){
       getIngredientsData(recipesFiltered);
       let searchResult = ingredientsArray.filter((ingredientsArray) => ingredientsArray.includes(input))
-      console.log(searchResult)
       displayOptionForType(searchResult,boxList, className)
-      updateAllSelect()
+      itemSelection(ingredientOption.childNodes) 
     }
     if(className === 'Appareil'){
       getAppareilsData(recipesFiltered);
       let searchResult = appareilsArray.filter((appareilsArray) => appareilsArray.includes(input))
-      console.log(searchResult)
       displayOptionForType(searchResult,boxList, className)
-      updateAllSelect()
+      itemSelection(appareilOption.childNodes)
     }
     if(className === 'Ustensile'){
       getUstensilsData(recipesFiltered);
       let searchResult = ustensilsArray.filter((ustensilsArray) => ustensilsArray.includes(input))
-      console.log(searchResult)
       displayOptionForType(searchResult,boxList, className)
-      updateAllSelect()
-    }*/
-    else{
-      getOptionData;
-      let searchResult = optionArray.filter((optionArray)=>optionArray.includes(input));
-      console.log(searchResult)
-      displayOptionForType(searchResult,boxList, className)
-      updateAllSelect()
+      itemSelection(ustensilOption.childNodes)
     }
-  console.log('OptionListSearch()')
 })  
 }
 function allOptionListSearch(){
-  const textValue = document.getElementById("search_input").value;
-  const recipesFiltered = updateRecipesList(selectedItemsArray, textValue);
+  optionListSearch(ingredientsSearch, ingredientsArray, "ingredientsList", 'Ingredient');
+  optionListSearch(appareilsSearch, appareilsArray, "appareilsList", 'Appareil');
+  optionListSearch(ustensilesSearch, ustensilsArray,"ustensilesList", 'Ustensile');
+}allOptionListSearch();
 
-  let ingredientsSearch = document.getElementById("ingredientsOptions_search");
-  optionListSearch(ingredientsSearch, ingredientsArray, "ingredientsList", 'Ingredient', getIngredientsData(recipesFiltered))
-
-  let appareilsSearch = document.getElementById("appareilsOptions_search");
-  optionListSearch(appareilsSearch, appareilsArray, "appareilsList", 'Appareil', getAppareilsData(recipesFiltered))
-
-  let ustensilesSearch = document.getElementById("ustensilesOptions_search");
-  optionListSearch(ustensilesSearch, ustensilsArray,"ustensilesList", 'Ustensile', getUstensilsData(recipesFiltered))
-  console.log('____________________')
-  console.log('allOptionListSearch()')
-}allOptionListSearch()
-
-//TEST
+//V11
