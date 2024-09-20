@@ -186,7 +186,6 @@
     }
     return recipesFiltered.filter((recipe) => {
       let isTextFound = false;
-      // ....
       if (
         recipe.name.toLocaleLowerCase().includes(textSearch.toLocaleLowerCase())
       ) {
