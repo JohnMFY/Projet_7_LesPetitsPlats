@@ -233,12 +233,15 @@
     displayAllSelect() 
     recipesSection.innerHTML = ''
     displayRecipes(recipesFiltered)  
+    updateAllSelect()
   });
 /****************************/
 /** UPDATE RECIPES NUMBER **/
 /**************************/  
 
   const displayedRecipesNumber = document.getElementById('recipes_number')
+  let numberOfBaseRecipes = recipes.length
+  displayedRecipesNumber.innerHTML = numberOfBaseRecipes +" recettes"
   function updateRecipesNumber(updatedNumberRecipes){
     if(updatedNumberRecipes > 1){
       displayedRecipesNumber.innerHTML = updatedNumberRecipes +" recettes"
