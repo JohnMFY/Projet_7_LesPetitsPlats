@@ -184,24 +184,24 @@
     if (textSearch.length < 3) {
       return recipesFiltered;
     }
-    return recipesFiltered.filter((recipe) => {
-      let isTextFound = false;
-      // ....
+    const recipesResult = [];
+    for (const recipe of recipesFiltered) {
       if (
         recipe.name.toLocaleLowerCase().includes(textSearch.toLocaleLowerCase())
       ) {
-        isTextFound = true;
+        recipesResult.push(recipe);
+        continue;
       }
       if (
         recipe.description
           .toLocaleLowerCase()
           .includes(textSearch.toLocaleLowerCase())
       ) {
-        isTextFound = true;
+        recipesResult.push(recipe);
+        continue;
       }
-
-      return isTextFound;
-    });
+    }
+    return recipesResult;
   }
 
 /** UPDATE RECIPES LIST WITH TAGS AND TEXT **/
