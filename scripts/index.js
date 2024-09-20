@@ -146,6 +146,11 @@
 
 /** SEARCH BY TAGS **/
   function searchByTags(recipesList, selectedItemsArray) {
+      for (recipe of recipes){
+        console.log(recipe)
+
+      }
+    /*
     return recipesList.filter((recipe) => {
       let isOk = true;
       selectedItemsArray.forEach((item) => {
@@ -177,6 +182,7 @@
       });
       return isOk;
     });
+    */
   }
 
 /** SEARCH BY TEXT **/
