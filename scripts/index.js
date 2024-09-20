@@ -180,29 +180,29 @@
   }
 
 /** SEARCH BY TEXT **/
-function searchByText(recipesFiltered, textSearch) {
-  if (textSearch.length < 3) {
-    return recipesFiltered;
-  }
-  const recipesResult = [];
-  for (const recipe of recipesFiltered) {
-    if (
-      recipe.name.toLocaleLowerCase().includes(textSearch.toLocaleLowerCase())
-    ) {
-      recipesResult.push(recipe);
-      continue;
+  function searchByText(recipesFiltered, textSearch) {
+    if (textSearch.length < 3) {
+      return recipesFiltered;
     }
-    if (
-      recipe.description
-        .toLocaleLowerCase()
-        .includes(textSearch.toLocaleLowerCase())
-    ) {
-      recipesResult.push(recipe);
-      continue;
-    }
+    return recipesFiltered.filter((recipe) => {
+      let isTextFound = false;
+      // ....
+      if (
+        recipe.name.toLocaleLowerCase().includes(textSearch.toLocaleLowerCase())
+      ) {
+        isTextFound = true;
+      }
+      if (
+        recipe.description
+          .toLocaleLowerCase()
+          .includes(textSearch.toLocaleLowerCase())
+      ) {
+        isTextFound = true;
+      }
+
+      return isTextFound;
+    });
   }
-  return recipesResult;
-}
 
 /** UPDATE RECIPES LIST WITH TAGS AND TEXT **/
   function updateRecipesList(selectedItemsArray, textSearch) {
