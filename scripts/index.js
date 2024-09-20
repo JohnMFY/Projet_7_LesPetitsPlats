@@ -203,7 +203,6 @@
       return isTextFound;
     });
   }
-
 /** UPDATE RECIPES LIST WITH TAGS AND TEXT **/
   function updateRecipesList(selectedItemsArray, textSearch) {
     const filteredRecipesByTags = searchByTags(recipes, selectedItemsArray);
