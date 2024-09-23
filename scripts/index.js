@@ -348,6 +348,7 @@
       recipesSection.innerHTML = ''
       displayRecipes(recipesFiltered)
       updateAllSelect()
+      updateRecipesNumber(recipesFiltered.length)
     }
 
     function updateAllSelect() {
