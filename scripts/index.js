@@ -146,8 +146,8 @@
 
 /** SEARCH BY TAGS **/
   function searchByTags(recipesList, selectedItemsArray) {
-      for (recipe of recipes){
-        console.log(recipe)
+      for (const recipe of recipesList){
+        
 
       }
     /*
@@ -183,7 +183,7 @@
       return isOk;
     });
     */
-  }
+  }searchByTags(recipes,[])
 
 /** SEARCH BY TEXT **/
   function searchByText(recipesFiltered, textSearch) {
