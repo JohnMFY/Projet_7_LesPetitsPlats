@@ -146,11 +146,38 @@
 
 /** SEARCH BY TAGS **/
   function searchByTags(recipesList, selectedItemsArray) {
-      for (const recipe of recipesList){
-        
+    const tagsFilteredRecipes = []
+    let isOk = true;
+    for (const recipe of recipesList){
+      //console.log(recipe.ingredients)
+      for(let selectedItem of selectedItemsArray){
+
+        if(selectedItem.label === "Ingredient") {
+          for(let ingredient of recipe.ingredients){
+
+            if(ingredient.ingredient.toLowerCase() === selectedItem.value.toLowerCase()){ //toutes les recettes contenant l'ingredient selectionné
+              tagsFilteredRecipes.push(recipe)
+              continue
+            }
+          }
+        }
+
+        if(selectedItem.label === "Appareil") {
+          if (selectedItem.value.toLowerCase() !== recipe.appliance.toLocaleLowerCase()){ //toutes les recettes sans l'appareil selectionné
+            //tagsFilteredRecipes.reduce(recipe)
+          }
+        }
+
+        if(selectedItem.label === "Ustensile") {
+          if (!recipe.ustensils.includes(selectedItem.value.toLocaleLowerCase())){//toutes les recettes sans l'ustensils selectionné
+            //tagsFilteredRecipes.push(recipe)
+          }
+        }
 
       }
-    /*
+      console.log(tagsFilteredRecipes)
+    }
+  /*********************************************/ 
     return recipesList.filter((recipe) => {
       let isOk = true;
       selectedItemsArray.forEach((item) => {
@@ -182,8 +209,7 @@
       });
       return isOk;
     });
-    */
-  }searchByTags(recipes,[])
+  }
 
 /** SEARCH BY TEXT **/
   function searchByText(recipesFiltered, textSearch) {
