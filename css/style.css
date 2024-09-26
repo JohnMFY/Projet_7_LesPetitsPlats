@@ -246,11 +246,20 @@ ul{
     margin: 0%;
     padding: 2%;
 }
+.dropdown-menu.show {
+    display: block;
+    max-height: 230px;
+    overflow-y: scroll;
+}
+.search_icon_option{
+    padding: 0px 2px;
+}
 li{
     list-style: none;
     display: flex;
     flex-flow: row nowrap;
-    width: 80%;
+    width: 100%;
+    padding-left: 4%;
 }
 li:hover{
     background-color: #FFD15B;

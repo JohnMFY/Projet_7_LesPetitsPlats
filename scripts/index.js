@@ -145,71 +145,42 @@
 /***************************/
 
 /** SEARCH BY TAGS **/
-  function searchByTags(recipesList, selectedItemsArray) {
-    const tagsFilteredRecipes = []
+function searchByTags(recipesList, selectedItemsArray) {
+  let tagsFilteredRecipes = []
+  for (const recipe of recipesList){ 
     let isOk = true;
-    for (const recipe of recipesList){
-      //console.log(recipe.ingredients)
-      for(let selectedItem of selectedItemsArray){
+    for(let selectedItem of selectedItemsArray){
 
-        if(selectedItem.label === "Ingredient") {
-          for(let ingredient of recipe.ingredients){
-
-            if(ingredient.ingredient.toLowerCase() === selectedItem.value.toLowerCase()){ //toutes les recettes contenant l'ingredient selectionné
-              tagsFilteredRecipes.push(recipe)
-              continue
-            }
+      if(selectedItem.label === "Ingredient") {
+        let ingredientFound = false;
+        for(let ingredient of recipe.ingredients){
+          if(ingredient.ingredient.toLowerCase() === selectedItem.value.toLowerCase()){
+            ingredientFound = true
           }
+        };
+        if(ingredientFound === false){
+            isOk = false
         }
-
-        if(selectedItem.label === "Appareil") {
-          if (selectedItem.value.toLowerCase() !== recipe.appliance.toLocaleLowerCase()){ //toutes les recettes sans l'appareil selectionné
-            //tagsFilteredRecipes.reduce(recipe)
-          }
-        }
-
-        if(selectedItem.label === "Ustensile") {
-          if (!recipe.ustensils.includes(selectedItem.value.toLocaleLowerCase())){//toutes les recettes sans l'ustensils selectionné
-            //tagsFilteredRecipes.push(recipe)
-          }
-        }
-
       }
-      console.log(tagsFilteredRecipes)
+
+      if(selectedItem.label === "Appareil") {
+        if (selectedItem.value.toLowerCase() !== recipe.appliance.toLowerCase()){
+          isOk = false;
+        }
+      }
+
+      if(selectedItem.label === "Ustensile") {
+        if (!recipe.ustensils.includes(selectedItem.value.toLowerCase())){
+          isOk = false
+        } 
+      }   
     }
-  /*********************************************/ 
-    return recipesList.filter((recipe) => {
-      let isOk = true;
-      selectedItemsArray.forEach((item) => {
-        if (item.label === "Ingredient") {
-          let isIngredientFound = false;
-          recipe.ingredients.forEach((ingredient) => {
-            if (
-              ingredient.ingredient.toLowerCase() === item.value.toLowerCase()
-            ) {
-              isIngredientFound = true;
-            }
-          });
-          if (isIngredientFound === false) {
-            isOk = false;
-          }
-        }
-
-        if (item.label === "Appareil") {
-          if (item.value.toLowerCase() !== recipe.appliance.toLocaleLowerCase()) {
-            isOk = false;
-          }
-        }
-
-        if (item.label === "Ustensile") {
-          if (!recipe.ustensils.includes(item.value.toLocaleLowerCase())) {
-            isOk = false;
-          }
-        }
-      });
-      return isOk;
-    });
+    if(isOk === true){
+      tagsFilteredRecipes.push(recipe)
+    }
   }
+  return tagsFilteredRecipes
+}
 
 /** SEARCH BY TEXT **/
   function searchByText(recipesFiltered, textSearch) {
