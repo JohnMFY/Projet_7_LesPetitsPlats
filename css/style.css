@@ -246,11 +246,15 @@ ul{
     margin: 0%;
     padding: 2%;
 }
+ 
 .dropdown-menu.show {
     display: block;
     max-height: 230px;
     overflow-y: scroll;
 }
+.dropdown-menu.show::-webkit-scrollbar {
+    display: none;
+  }
 .search_icon_option{
     padding: 0px 2px;
 }
